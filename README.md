@@ -45,8 +45,15 @@ _En caso de no contar con las dependencias ejecutar lo siguiente en cmd o simila
 ```
 
 ## Despliegue 📦 
+```
+Server port: 4800
+Link tests: http://localhost:4800/swagger-ui.html
+```
 
-_en contrucción_
+
+
+
+
 
 ## Construido con 🛠️
 * [Spring-Boot](https://spring.io/projects/spring-boot) - El framework Rest Api usado
