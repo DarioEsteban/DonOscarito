@@ -31,10 +31,10 @@ _Que cosas necesitas para instalar el software y como instalarlas_
 
 ### Instalación 🔧
 
-_Una serie de ejemplos paso a paso que te dice lo que debes ejecutar para tener un entorno de desarrollo ejecutandose_
+_Clonar repositorio_
 
 ```
-clonar repositorio: git clone https://github.com/DarioEsteban/DonOscarito.git
+git clone https://github.com/DarioEsteban/DonOscarito.git
 ```
 
 _En caso de no contar con las dependencias ejecutar lo siguiente en cmd o similar:_
