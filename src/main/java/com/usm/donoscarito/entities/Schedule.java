@@ -2,7 +2,6 @@ package com.usm.donoscarito.entities;
 
 import java.sql.Date;
 import java.sql.Time;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,42 +16,40 @@ public class Schedule {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_horario")
-	private int idSchedule;
+	private Integer idSchedule;
 
 	@Column(name="id_cancha")
-	private int idField;
+	private Integer idField;
 
 	@Column(name="fecha")
 	private Date date;
 	
 	@Column(name="bloque_inicio")
 	private Time initTime;
-	
-	
+
 	@Column(name="bloque_fin")
 	private Time finalTime;
-	
-	
+		
 	@Column(name="estado")
 	private Boolean available;
 
 
-	public int getIdSchedule() {
+	public Integer getIdSchedule() {
 		return idSchedule;
 	}
 
 
-	public void setIdSchedule(int idSchedule) {
+	public void setIdSchedule(Integer idSchedule) {
 		this.idSchedule = idSchedule;
 	}
 
 
-	public int getIdField() {
+	public Integer getIdField() {
 		return idField;
 	}
 
 
-	public void setIdField(int idField) {
+	public void setIdField(Integer idField) {
 		this.idField = idField;
 	}
 
@@ -87,13 +84,13 @@ public class Schedule {
 	}
 
 
-	public Boolean getStatus() {
+	public Boolean getAvailable() {
 		return available;
 	}
 
 
-	public void setStatus(Boolean status) {
-		this.available = status;
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 	
 	
