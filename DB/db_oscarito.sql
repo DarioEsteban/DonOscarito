@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2021 a las 02:52:57
--- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 8.0.3
+-- Servidor: localhost:3306
+-- Tiempo de generación: 21-06-2021 a las 19:31:32
+-- Versión del servidor: 5.7.33
+-- Versión de PHP: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,14 @@ CREATE TABLE `cancha` (
   `id_estado_cancha` int(11) DEFAULT NULL,
   `id_tipo_cancha` int(11) DEFAULT NULL,
   `valor_bloque` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `cancha`
+--
+
+INSERT INTO `cancha` (`id_cancha`, `id_estado_cancha`, `id_tipo_cancha`, `valor_bloque`) VALUES
+(1, 1, 1, 4500);
 
 -- --------------------------------------------------------
 
@@ -43,7 +50,7 @@ CREATE TABLE `cancha` (
 CREATE TABLE `estado_cancha` (
   `id_estado_cancha` int(11) NOT NULL,
   `descripcion` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `estado_cancha`
@@ -63,7 +70,7 @@ INSERT INTO `estado_cancha` (`id_estado_cancha`, `descripcion`) VALUES
 CREATE TABLE `estado_reserva` (
   `id_estado_reserva` int(11) NOT NULL,
   `descripcion` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `estado_reserva`
@@ -84,10 +91,20 @@ INSERT INTO `estado_reserva` (`id_estado_reserva`, `descripcion`) VALUES
 CREATE TABLE `horario_disponible` (
   `id_horario` int(11) NOT NULL,
   `id_cancha` int(11) NOT NULL,
+  `fecha` date NOT NULL,
   `bloque_inicio` time DEFAULT NULL,
   `bloque_fin` time DEFAULT NULL,
-  `dia_semana` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `estado` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `horario_disponible`
+--
+
+INSERT INTO `horario_disponible` (`id_horario`, `id_cancha`, `fecha`, `bloque_inicio`, `bloque_fin`, `estado`) VALUES
+(2, 1, '2021-06-20', '11:00:00', '11:59:00', 1),
+(4, 1, '2021-06-20', '10:00:00', '10:59:00', 1),
+(5, 1, '2021-06-20', '12:00:00', '12:59:00', 0);
 
 -- --------------------------------------------------------
 
@@ -99,7 +116,14 @@ CREATE TABLE `pago` (
   `id_pago` int(11) NOT NULL,
   `metodo` varchar(10) DEFAULT NULL,
   `monto` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `pago`
+--
+
+INSERT INTO `pago` (`id_pago`, `metodo`, `monto`) VALUES
+(1, 'debito', 4500);
 
 -- --------------------------------------------------------
 
@@ -109,14 +133,21 @@ CREATE TABLE `pago` (
 
 CREATE TABLE `reserva` (
   `id_cancha` int(11) NOT NULL,
+  `fecha_reserva` date NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_pago` int(11) DEFAULT NULL,
-  `fecha_reserva` date NOT NULL,
-  `monto` int(11) DEFAULT NULL,
   `id_estado_reserva` int(11) NOT NULL,
   `bloque_inicio` int(11) DEFAULT NULL,
   `bloque_fin` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `reserva`
+--
+
+INSERT INTO `reserva` (`id_cancha`, `fecha_reserva`, `id_usuario`, `id_pago`, `id_estado_reserva`, `bloque_inicio`, `bloque_fin`) VALUES
+(1, '2021-06-21', 2, NULL, 2, 2, 2),
+(1, '2021-06-22', 2, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -126,9 +157,9 @@ CREATE TABLE `reserva` (
 
 CREATE TABLE `tipo_cancha` (
   `id_tipo_cancha` int(11) NOT NULL,
-  `nombre` varchar(10) DEFAULT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
   `capacidad` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tipo_cancha`
@@ -137,7 +168,7 @@ CREATE TABLE `tipo_cancha` (
 INSERT INTO `tipo_cancha` (`id_tipo_cancha`, `nombre`, `capacidad`) VALUES
 (1, 'Tenis', 4),
 (2, 'Futbolito', 17),
-(3, 'Baby_Futbo', 10),
+(3, 'Baby_Futbol', 10),
 (4, 'Futbol', 22),
 (5, 'Voleybol', 12),
 (6, 'Basquetbol', 10);
@@ -151,7 +182,7 @@ INSERT INTO `tipo_cancha` (`id_tipo_cancha`, `nombre`, `capacidad`) VALUES
 CREATE TABLE `tipo_usuario` (
   `id_tipo_usuario` int(11) NOT NULL,
   `descripcion` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tipo_usuario`
@@ -176,7 +207,7 @@ CREATE TABLE `usuario` (
   `email` varchar(15) DEFAULT NULL,
   `telefono` varchar(9) DEFAULT NULL,
   `contrasena` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -214,7 +245,7 @@ ALTER TABLE `estado_reserva`
 -- Indices de la tabla `horario_disponible`
 --
 ALTER TABLE `horario_disponible`
-  ADD PRIMARY KEY (`id_horario`,`id_cancha`),
+  ADD PRIMARY KEY (`id_horario`,`id_cancha`,`fecha`),
   ADD KEY `fk_horario` (`id_cancha`);
 
 --
@@ -227,7 +258,7 @@ ALTER TABLE `pago`
 -- Indices de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  ADD PRIMARY KEY (`id_cancha`,`id_usuario`,`fecha_reserva`),
+  ADD PRIMARY KEY (`id_cancha`,`fecha_reserva`,`id_usuario`) USING BTREE,
   ADD KEY `fk_estado_reserva` (`id_estado_reserva`),
   ADD KEY `fk_pago` (`id_pago`),
   ADD KEY `fk_usuario` (`id_usuario`);
@@ -259,7 +290,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cancha`
 --
 ALTER TABLE `cancha`
-  MODIFY `id_cancha` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cancha` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `estado_cancha`
@@ -277,13 +308,13 @@ ALTER TABLE `estado_reserva`
 -- AUTO_INCREMENT de la tabla `horario_disponible`
 --
 ALTER TABLE `horario_disponible`
-  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_cancha`
