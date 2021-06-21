@@ -1,5 +1,9 @@
 package com.usm.donoscarito.controllersImpl;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +27,12 @@ import io.swagger.annotations.ApiResponses;
 	@ApiResponse(code = 500, message = "Internal Server Error")
 	})
 
-@RequestMapping(value = "/field")
+@RequestMapping(value = "/don-oscarito/field")
 public class FieldControllerImpl implements FieldController {
 
 	@Autowired
 	FieldService fieldService;
+	private List<Field> aux2;
 	
 	@ApiOperation(value = "Agregar una cancha.")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces={"application/json"})	
@@ -63,6 +68,16 @@ public class FieldControllerImpl implements FieldController {
 		{
 			return new ResponseEntity<String>("{\"message\":\""+ex.getMessage()+"\"}",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@ApiOperation(value = "Obtener canchas.")
+	@RequestMapping(value = "/list", method = RequestMethod.GET, produces={"application/json"})	
+	@Override
+	public List<Field> getFields() {
+		/*List<Field> aux = fieldService.getFields();
+		aux2 = null;
+		aux.stream().filter(field -> field.getIdState() == 1).map(field -> aux2.add(field));*/
+		return fieldService.getFields();
 	}
 
 }

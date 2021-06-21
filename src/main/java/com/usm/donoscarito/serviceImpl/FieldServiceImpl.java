@@ -1,5 +1,7 @@
 package com.usm.donoscarito.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.Field;
@@ -42,6 +44,12 @@ public class FieldServiceImpl implements FieldService {
 		} else {
 			throw new IllegalArgumentException("No existe cancha.");
 		}
+	}
+
+	@Override
+	public List<Field> getFields() {
+		// TODO Auto-generated method stub
+		return fieldRepository.findAll();
 	}
 
 }
