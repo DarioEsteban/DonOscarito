@@ -64,4 +64,22 @@ public class ReservationControllerImpl implements ReservationController {
 		}
 	}
 
+	@ApiOperation(value = "Modificar una reserva.")
+	@RequestMapping(value = "/update", method = RequestMethod.PATCH, produces={"application/json"})	
+	@Override
+	public ResponseEntity<String> updateReservation(@RequestBody Reservation reservation) {
+		try {
+			reservationService.update(reservation);
+			return new ResponseEntity<String>("",HttpStatus.OK);
+		}
+		catch(IllegalArgumentException iex)
+		{
+			return new ResponseEntity<String>("{\"message\":\""+iex.getMessage()+"\"}",HttpStatus.CONFLICT);
+		}
+		catch(Exception ex)
+		{
+			return new ResponseEntity<String>("{\"message\":\""+ex.getMessage()+"\"}",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

@@ -10,4 +10,5 @@ public interface ReservationController {
 	
 	public ResponseEntity<String> cancelReservation(Reservation reservation);
 	
+	public ResponseEntity<String> updateReservation(Reservation reservation);
 }
