@@ -5,11 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
- 
-import com.usm.donoscarito.entities.compositeId.ReservationId;
+import com.usm.donoscarito.entities.compositeId.FieldId;
 
 @Entity
-@IdClass(ReservationId.class)
+@IdClass(FieldId.class)
 @Table(name = "cancha")
 public class Field {
 	

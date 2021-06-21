@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiResponses;
 	@ApiResponse(code = 409, message = "Conflict"),
 	@ApiResponse(code = 500, message = "Internal Server Error")
 	})
-@RequestMapping(value = "/don-oscarito/reservation")
+@RequestMapping(value = "/reservation")
 public class ReservationControllerImpl implements ReservationController {
 
 	@Autowired

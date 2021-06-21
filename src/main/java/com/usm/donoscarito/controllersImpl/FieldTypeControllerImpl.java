@@ -15,7 +15,7 @@ public class FieldTypeControllerImpl implements FieldTypeController  {
 	@Autowired
 	FieldTypeService fieldTypeService; 
 		
-	@RequestMapping(value = "/don-oscarito/fieldtype", method = RequestMethod.GET, produces={"application/json"})	
+	@RequestMapping(value = "/fieldtype", method = RequestMethod.GET, produces={"application/json"})	
 	@Override
 	public List<FieldType> getFieldsTypes() {
 		// TODO Auto-generated method stub

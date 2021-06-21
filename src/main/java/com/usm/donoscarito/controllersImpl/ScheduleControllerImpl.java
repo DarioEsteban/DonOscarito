@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiResponses;
 	@ApiResponse(code = 409, message = "Conflict"),
 	@ApiResponse(code = 500, message = "Internal Server Error")
 	})
-@RequestMapping(value = "/don-oscarito/schedule")
+@RequestMapping(value = "/schedule")
 public class ScheduleControllerImpl implements ScheduleController {
 
 	/*

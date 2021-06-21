@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EchoController {
 
-	@RequestMapping(value = "/don-oscarito/echo", method = RequestMethod.GET, produces={"application/text"})	
+	@RequestMapping(value = "/echo", method = RequestMethod.GET, produces={"application/text"})	
     public String Echo() {
         return "Ok";
     }
