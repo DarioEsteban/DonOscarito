@@ -8,4 +8,6 @@ public interface ReservationController {
 
 	public ResponseEntity<String> addReservation(Reservation reservation);
 	
+	public ResponseEntity<String> cancelReservation(Reservation reservation);
+	
 }

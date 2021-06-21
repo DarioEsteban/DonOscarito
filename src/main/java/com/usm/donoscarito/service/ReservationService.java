@@ -6,4 +6,5 @@ public interface ReservationService {
 
 	public void save(Reservation reservation);
 	
+	public void cancel(Reservation reservation);
 }

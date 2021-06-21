@@ -46,4 +46,22 @@ public class ReservationControllerImpl implements ReservationController {
 		}
 	}
 
+	@ApiOperation(value = "Anular una reserva.")
+	@RequestMapping(value = "/cancel", method = RequestMethod.PATCH, produces={"application/json"})	
+	@Override
+	public ResponseEntity<String> cancelReservation(@RequestBody Reservation reservation) {
+		try {
+			reservationService.cancel(reservation);
+			return new ResponseEntity<String>("",HttpStatus.OK);
+		}
+		catch(IllegalArgumentException iex)
+		{
+			return new ResponseEntity<String>("{\"message\":\""+iex.getMessage()+"\"}",HttpStatus.CONFLICT);
+		}
+		catch(Exception ex)
+		{
+			return new ResponseEntity<String>("{\"message\":\""+ex.getMessage()+"\"}",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

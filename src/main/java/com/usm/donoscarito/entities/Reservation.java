@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.usm.donoscarito.entities.compositeId.ReservationId;
 
 @Entity
@@ -21,15 +25,14 @@ public class Reservation {
 	@Column(name="id_usuario")
 	private Integer idUser;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Id
 	@Column(name="fecha_reserva")
 	private Date date;
 	
 	@Column(name="id_pago")
 	private Integer idPayment;
-	
-	@Column(name="monto")
-	private Integer amount;
 	
 	@Column(name="id_estado_reserva")
 	private Integer idState;
@@ -72,14 +75,6 @@ public class Reservation {
 		this.date = date;
 	}
 
-	public Integer getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Integer amount) {
-		this.amount = amount;
-	}
-
 	public Integer getIdState() {
 		return idState;
 	}
@@ -103,7 +98,4 @@ public class Reservation {
 	public void setFinalTime(Integer finalTime) {
 		this.finalTime = finalTime;
 	}
-	
-	
-
 }
