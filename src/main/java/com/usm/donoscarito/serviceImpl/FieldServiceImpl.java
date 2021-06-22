@@ -1,13 +1,10 @@
 package com.usm.donoscarito.serviceImpl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.Field;
-import com.usm.donoscarito.entities.Reservation;
 import com.usm.donoscarito.entities.compositeId.FieldId;
-import com.usm.donoscarito.entities.compositeId.ReservationId;
 import com.usm.donoscarito.repository.FieldRepository;
 import com.usm.donoscarito.service.FieldService;
 
@@ -37,8 +34,7 @@ public class FieldServiceImpl implements FieldService {
 			// Configurar clase
 			fieldToUpdate.setIdState(field.getIdState()); 
 			fieldToUpdate.setIdType(field.getIdType());
-			fieldToUpdate.setValue(field.getValue());
-
+			fieldToUpdate.setAmount(field.getAmount());
 			// Modificar
 			fieldRepository.save(fieldToUpdate);
 		} else {

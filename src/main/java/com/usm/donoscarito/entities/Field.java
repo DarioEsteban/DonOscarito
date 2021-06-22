@@ -26,7 +26,7 @@ public class Field {
 	private Integer idType; 
 	
 	@Column(name="valor_bloque")
-	private Integer value;
+	private Integer amount;
 
 	public Integer getIdField() {
 		return idField;
@@ -52,12 +52,12 @@ public class Field {
 		this.idType = idType;
 	}
 
-	public Integer getValue() {
-		return value;
+	public Integer getAmount() {
+		return amount;
 	}
 
-	public void setValue(Integer value) {
-		this.value = value;
+	public void setAmount(Integer amount) {
+		this.amount = amount;
 	}
 	
 }
