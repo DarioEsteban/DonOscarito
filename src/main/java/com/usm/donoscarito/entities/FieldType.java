@@ -22,6 +22,8 @@ public class FieldType {
 	@Column(name="capacidad")
 	private int capacity;
 	
+	//GETTERS & SETTERS
+	
 	public int getIdFieldType() {
 		return idFieldType;
 	}
@@ -45,6 +47,4 @@ public class FieldType {
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
-	
-	
 }
