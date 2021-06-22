@@ -2,28 +2,30 @@ package com.usm.donoscarito.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.usm.donoscarito.entities.compositeId.FieldId; 
-
 @Entity
-@IdClass(FieldId.class)
 @Table(name = "cancha")
 public class Field {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_cancha")
 	private Integer idField;
 	
-	@Id
-	@Column(name="id_estado_cancha")
-	private Integer idState;
+	@OneToOne
+    @JoinColumn(name  = "id_estado_cancha")
+	private StateField stateField;
 	
-	@Id
-	@Column(name="id_tipo_cancha")
-	private Integer idType; 
+	@ManyToOne
+    @JoinColumn(name  = "id_tipo_cancha")
+	private FieldType fieldType;
 	
 	@Column(name="valor_bloque")
 	private Integer amount;
@@ -36,20 +38,20 @@ public class Field {
 		this.idField = idField;
 	}
 
-	public Integer getIdState() {
-		return idState;
+	public StateField getStateField() {
+		return stateField;
 	}
 
-	public void setIdState(Integer idState) {
-		this.idState = idState;
+	public void setStateField(StateField stateField) {
+		this.stateField = stateField;
 	}
 
-	public Integer getIdType() {
-		return idType;
+	public FieldType getFieldType() {
+		return fieldType;
 	}
 
-	public void setIdType(Integer idType) {
-		this.idType = idType;
+	public void setFieldType(FieldType fieldType) {
+		this.fieldType = fieldType;
 	}
 
 	public Integer getAmount() {
@@ -59,5 +61,8 @@ public class Field {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+	
+	
+	
 	
 }

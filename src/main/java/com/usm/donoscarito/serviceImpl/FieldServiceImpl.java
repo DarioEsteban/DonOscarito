@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.Field;
-import com.usm.donoscarito.entities.compositeId.FieldId;
 import com.usm.donoscarito.repository.FieldRepository;
 import com.usm.donoscarito.service.FieldService;
 
@@ -16,24 +15,19 @@ public class FieldServiceImpl implements FieldService {
 
 	@Override
 	public void save(Field field) {
-		if (!fieldRepository.existsById(new FieldId(field.getIdField(), field.getIdState(), field.getIdType()))) {
-			fieldRepository.save(field);
-		} else {
-			throw new IllegalArgumentException("Ya existe cancha.");
-		}
+		fieldRepository.save(field);
 	}
  
 	@Override
 	public void update(Field field) {
 		// Armar PK compuesta
-		FieldId fieldId = new FieldId(field.getIdField(), field.getIdState(), field.getIdType());
 		// Validar existencia de elemento
-		if (fieldRepository.existsById(fieldId)) {
+		if (fieldRepository.existsById(field.getIdField())) {
 			// Rescatar reserva
-			Field fieldToUpdate = fieldRepository.getOne(fieldId); 
+			Field fieldToUpdate = fieldRepository.getOne(field.getIdField()); 
 			// Configurar clase
-			fieldToUpdate.setIdState(field.getIdState()); 
-			fieldToUpdate.setIdType(field.getIdType());
+			//fieldToUpdate.setIdState(field.getIdState()); 
+			fieldToUpdate.setFieldType(field.getFieldType());
 			fieldToUpdate.setAmount(field.getAmount());
 			// Modificar
 			fieldRepository.save(fieldToUpdate);
