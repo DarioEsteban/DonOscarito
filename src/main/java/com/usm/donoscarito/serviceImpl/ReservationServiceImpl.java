@@ -1,5 +1,7 @@
 package com.usm.donoscarito.serviceImpl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.Reservation;
@@ -32,18 +34,23 @@ public class ReservationServiceImpl implements ReservationService {
 		if(reservationRepository.existsById(reservationId))
 		{
 			//Rescatar reserva
-			Reservation reservationToUpdate = reservationRepository.getOne(reservationId);
-			//Validar que no contenga pago
-			if(reservationToUpdate.getIdPayment() == null) {
-				//Configurar clase
-				reservationToUpdate.setIdState(2);
-				reservationToUpdate.setDate(reservation.getDate());	
-				//Anular
-				reservationRepository.save(reservationToUpdate);
+			Optional<Reservation> reservationFind = reservationRepository.findById(reservationId);
+			
+			if(reservationFind.isPresent()) {
+				Reservation reservationToUpdate = reservationFind.get();
+				//Validar que no contenga pago
+				if(reservationToUpdate.getIdPayment() == null) {
+					//Configurar clase
+					reservationToUpdate.setIdState(2);
+					reservationToUpdate.setDate(reservation.getDate());	
+					//Anular
+					reservationRepository.save(reservationToUpdate);
+				}
+				else {
+					throw new IllegalArgumentException("La reserva se encuentra pagada, no se puede anular.");
+				}
 			}
-			else {
-				throw new IllegalArgumentException("La reserva se encuentra pagada, no se puede anular.");
-			}
+			
 		}
 		else {
 			throw new IllegalArgumentException("No existe una reserva con las características seleccionadas.");
@@ -58,17 +65,21 @@ public class ReservationServiceImpl implements ReservationService {
 		if(reservationRepository.existsById(reservationId))
 		{
 			//Rescatar reserva
-			Reservation reservationToUpdate = reservationRepository.getOne(reservationId);
-			//Configurar clase
-			reservationToUpdate.setDate(reservation.getDate());
-			reservationToUpdate.setInitTime(reservation.getInitTime());
-			reservationToUpdate.setFinalTime(reservation.getFinalTime());
+			Optional<Reservation> reservationFind = reservationRepository.findById(reservationId);
 			
-			if(reservation.getIdPayment() != null)
-				reservationToUpdate.setIdState(reservation.getIdPayment());
-			
-			//Modificar
-			reservationRepository.save(reservationToUpdate);
+			if(reservationFind.isPresent()) {
+				Reservation reservationToUpdate = reservationFind.get();
+				//Configurar clase
+				reservationToUpdate.setDate(reservation.getDate());
+				reservationToUpdate.setInitTime(reservation.getInitTime());
+				reservationToUpdate.setFinalTime(reservation.getFinalTime());
+				
+				if(reservation.getIdPayment() != null)
+					reservationToUpdate.setIdState(reservation.getIdPayment());
+				
+				//Modificar
+				reservationRepository.save(reservationToUpdate);
+			}			
 		}
 		else {
 			throw new IllegalArgumentException("No existe una reserva con las características seleccionadas.");

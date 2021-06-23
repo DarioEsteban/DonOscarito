@@ -1,6 +1,8 @@
 package com.usm.donoscarito.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.Field;
@@ -24,13 +26,17 @@ public class FieldServiceImpl implements FieldService {
 		// Validar existencia de elemento
 		if (fieldRepository.existsById(field.getIdField())) {
 			// Rescatar reserva
-			Field fieldToUpdate = fieldRepository.getOne(field.getIdField()); 
-			// Configurar clase
-			//fieldToUpdate.setIdState(field.getIdState()); 
-			fieldToUpdate.setFieldType(field.getFieldType());
-			fieldToUpdate.setAmount(field.getAmount());
-			// Modificar
-			fieldRepository.save(fieldToUpdate);
+			Optional<Field> fieldToUpdate = fieldRepository.findById(field.getIdField());
+			if(fieldToUpdate.isPresent()) {
+				// Configurar clase
+				Field fieldUpdate = fieldToUpdate.get();
+				//fieldToUpdate.setIdState(field.getIdState()); 
+				fieldUpdate.setFieldType(field.getFieldType());
+				fieldUpdate.setAmount(field.getAmount());
+				// Modificar
+				fieldRepository.save(fieldUpdate);
+			}
+			
 		} else {
 			throw new IllegalArgumentException("No existe cancha.");
 		}
