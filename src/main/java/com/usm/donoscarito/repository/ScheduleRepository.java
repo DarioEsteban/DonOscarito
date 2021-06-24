@@ -15,4 +15,5 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 	 * */
 	List<Schedule> findByidFieldInAndDateIn(List<Integer> field, List<Date> date);
 	
+	List<Schedule> findByAvailableIn(List<Boolean> available);
 }

@@ -72,4 +72,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 			throw new IllegalArgumentException("Error al actualizar los bloques de horarios.");
 		};
 	}
+
+	@Override
+	public List<Schedule> findByAvailableIn(List<Boolean> availables) {
+		// TODO Auto-generated method stub
+		return scheduleRepository.findByAvailableIn(availables);
+	}
 }

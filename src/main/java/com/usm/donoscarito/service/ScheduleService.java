@@ -8,6 +8,8 @@ public interface ScheduleService {
 
 	public List<Schedule> findByidFieldInAndDateIn(List<Integer> fields, List<Date> dates);
 	
+	public List<Schedule> findByAvailableIn(List<Boolean> availables);
+	
 	public void update(List<Schedule> schedules);
 	
 }
