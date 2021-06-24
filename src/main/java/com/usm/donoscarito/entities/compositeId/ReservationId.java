@@ -9,15 +9,18 @@ public class ReservationId implements Serializable {
 	
 	private Integer idUser;
 	
+	private Integer idBlock;
+	
 	private Date date;
 	
 	public ReservationId() {
 		
 	}
 
-	public ReservationId(Integer idField, Integer idUser, Date date) {
+	public ReservationId(Integer idField, Integer idUser, Integer idBlock, Date date) {
 		this.idField = idField;
 		this.idUser = idUser;
+		this.idBlock = idBlock;
 		this.date = date;
 	}
 
@@ -27,6 +30,7 @@ public class ReservationId implements Serializable {
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((idField == null) ? 0 : idField.hashCode());
+		result = prime * result + ((idBlock == null) ? 0 : idBlock.hashCode());
 		result = prime * result + ((idUser == null) ? 0 : idUser.hashCode());
 		return result;
 	}
@@ -49,6 +53,11 @@ public class ReservationId implements Serializable {
 			if (other.idField != null)
 				return false;
 		} else if (!idField.equals(other.idField))
+			return false;
+		if (idUser == null) {
+			if (other.idUser != null)
+				return false;
+		} else if (!idUser.equals(other.idUser))
 			return false;
 		if (idUser == null) {
 			if (other.idUser != null)

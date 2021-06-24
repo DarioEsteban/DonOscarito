@@ -25,6 +25,10 @@ public class Reservation {
 	@Column(name="id_usuario")
 	private Integer idUser;
 	
+	@Id
+	@Column(name="id_bloque")
+	private Integer idBlock;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Id
@@ -36,13 +40,7 @@ public class Reservation {
 	
 	@Column(name="id_estado_reserva")
 	private Integer idState;
-	
-	@Column(name="bloque_inicio")
-	private Integer initTime;
-	
-	@Column(name="bloque_fin")
-	private Integer finalTime;
-
+ 
 	public Integer getIdField() {
 		return idField;
 	}
@@ -83,19 +81,12 @@ public class Reservation {
 		this.idState = idState;
 	}
 
-	public Integer getInitTime() {
-		return initTime;
+	public Integer getIdBlock() {
+		return idBlock;
 	}
 
-	public void setInitTime(Integer initTime) {
-		this.initTime = initTime;
+	public void setIdBlock(Integer idBlock) {
+		this.idBlock = idBlock;
 	}
-
-	public Integer getFinalTime() {
-		return finalTime;
-	}
-
-	public void setFinalTime(Integer finalTime) {
-		this.finalTime = finalTime;
-	}
+ 
 }

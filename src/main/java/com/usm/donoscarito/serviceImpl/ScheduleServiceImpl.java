@@ -74,8 +74,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public List<Schedule> findByAvailableIn(List<Boolean> availables) {
+	public List<Schedule> findByidFieldInAndAvailableIn(List<Integer> fields, List<Boolean> availables) {
 		// TODO Auto-generated method stub
-		return scheduleRepository.findByAvailableIn(availables);
+		return scheduleRepository.findByidFieldInAndAvailableIn(fields, availables);
 	}
 }

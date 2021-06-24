@@ -15,7 +15,7 @@ public class Schedule {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_horario")
+	@Column(name="id_bloque")
 	private Integer idSchedule;
 
 	@Column(name="id_cancha")

@@ -82,15 +82,18 @@ public class ScheduleControllerImpl implements ScheduleController {
 	 * Método Get para obtener los bloques de horario por disponibilidad. 
 	 * */
 	@ApiOperation(value = "Obtener bloques de horarios por disponibilidad.")
-	@RequestMapping(value = "/list1/{available}", method = RequestMethod.GET, produces={"application/json"})	
+	@RequestMapping(value = "/list1/{field}/{available}", method = RequestMethod.GET, produces={"application/json"})	
 	@Override
-	public List<Schedule> getByAvailable(@PathVariable Boolean available) {
+	public List<Schedule> getByFieldAvailable(@PathVariable Integer field, @PathVariable Boolean available) {
 		/*@PathVariable sirve para enlazar el parámetro pasado en @RequestMapping variable.*/
+		
+		List<Integer> fieldList = new ArrayList<Integer>();
+		fieldList.add(field);
 		
 		/*Crear lista de campos para pasar la variable que viene por parámetro*/
 		List<Boolean> availableList = new ArrayList<Boolean>();
 		availableList.add(available); 
 		
-		return scheduleService.findByAvailableIn(availableList);
+		return scheduleService.findByidFieldInAndAvailableIn(fieldList, availableList);
 	}
 }
