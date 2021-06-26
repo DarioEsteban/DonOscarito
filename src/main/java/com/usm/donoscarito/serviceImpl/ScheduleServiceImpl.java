@@ -22,30 +22,29 @@ public class ScheduleServiceImpl implements ScheduleService {
 	 * Listar horarios para una cancha y fecha
 	 * */
 	@Override
-	public List<Schedule> findByidFieldInAndDateIn(List<Integer> fields, List<Date> dates) {
+	public List<Schedule> findByidFieldInAndDateInAndAvailableIn(Integer field, Date date, Boolean available) {
 		// TODO Auto-generated method stub
-		return scheduleRepository.findByidFieldInAndDateIn(fields, dates);
+		return scheduleRepository.findByidFieldAndDateAndAvailable(field, date, available);
 	}
 
 	/*
 	 * Actualizar registros de Horario
 	 * */
 	@Override
-	public void update(List<Schedule> schedules) {
-		List<Schedule> schedulesToUpdate = new ArrayList<Schedule>();
-		
+	public void update(Schedule schedule) {
+		//List<Schedule> schedulesToUpdate = new ArrayList<Schedule>();
 		/*Recorrer lista en busca de horarios inconsistentes para evitar modificar y después tener otro con problemas*/
-		schedules.forEach((f) -> {
+		/*schedules.forEach((f) -> {
 			int id = f.getIdSchedule();			
-			/*Validar existencia del horario*/
+			//Validar existencia del horario
 			if (!scheduleRepository.existsById(id))
 			{
 				throw new IllegalArgumentException("No se ha encontrado el bloque de horario id="+id+".");
 			}
 			Optional<Schedule> scheduleFind = scheduleRepository.findById(id);
-			/*Validar que esté disponible*/
+			//Validar que esté disponible
 			if(scheduleFind.isPresent()) {
-				/*Ejecuta la condición sólo si es para arrendar*/
+				//Ejecuta la condición sólo si es para arrendar
 				if (!schedules.get(0).getAvailable())
 				{
 					if(!scheduleFind.get().getAvailable())
@@ -53,11 +52,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 				}
 				schedulesToUpdate.add(scheduleFind.get());
 			}			
-		});
+		});*/
 		
 		/*Recorrer lista para actualizar*/
 		try {
-			schedulesToUpdate.forEach((f) -> {
+			Schedule scheduleToUpdate = new Schedule();
+			scheduleToUpdate.setIdSchedule(schedule.getIdSchedule());
+			scheduleToUpdate.setIdField(schedule.getIdField());			
+			scheduleToUpdate.setDate(schedule.getDate());
+			scheduleToUpdate.setInitTime(schedule.getInitTime());
+			scheduleToUpdate.setFinalTime(schedule.getFinalTime());
+			scheduleToUpdate.setAvailable(schedule.getAvailable());
+			scheduleRepository.save(scheduleToUpdate);
+			/*schedulesToUpdate.forEach((f) -> {
 				Schedule scheduleToUpdate = new Schedule();
 				scheduleToUpdate.setIdSchedule(f.getIdSchedule());
 				scheduleToUpdate.setIdField(f.getIdField());			
@@ -66,10 +73,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 				scheduleToUpdate.setFinalTime(f.getFinalTime());
 				scheduleToUpdate.setAvailable(!f.getAvailable());
 				scheduleRepository.save(scheduleToUpdate);
-			});
+			});*/
 		}
 		catch(IllegalArgumentException iex) {			
 			throw new IllegalArgumentException("Error al actualizar los bloques de horarios.");
 		};
 	}
+ 
 }

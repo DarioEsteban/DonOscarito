@@ -3,24 +3,21 @@ package com.usm.donoscarito.entities.compositeId;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ReservationId implements Serializable {
+public class ScheduleId implements Serializable {
 	
 	private Integer idField;
-	
-	private Integer idUser;
-	
-	private Integer idBlock;
+	 
+	private Integer idSchedule;
 	
 	private Date date;
 	
-	public ReservationId() {
+	public ScheduleId() {
 		
 	}
 
-	public ReservationId(Integer idField, Integer idUser, Integer idBlock, Date date) {
+	public ScheduleId(Integer idField, Integer idSchedule, Date date) {
 		this.idField = idField;
-		this.idUser = idUser;
-		this.idBlock = idBlock;
+		this.idSchedule = idSchedule; 
 		this.date = date;
 	}
 
@@ -30,11 +27,11 @@ public class ReservationId implements Serializable {
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((idField == null) ? 0 : idField.hashCode());
-		result = prime * result + ((idBlock == null) ? 0 : idBlock.hashCode());
-		result = prime * result + ((idUser == null) ? 0 : idUser.hashCode());
+		result = prime * result + ((idSchedule == null) ? 0 : idSchedule.hashCode());
 		return result;
 	}
-
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -43,7 +40,7 @@ public class ReservationId implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ReservationId other = (ReservationId) obj;
+		ScheduleId other = (ScheduleId) obj;
 		if (date == null) {
 			if (other.date != null)
 				return false;
@@ -54,17 +51,11 @@ public class ReservationId implements Serializable {
 				return false;
 		} else if (!idField.equals(other.idField))
 			return false;
-		if (idUser == null) {
-			if (other.idUser != null)
+		if (idSchedule == null) {
+			if (other.idSchedule != null)
 				return false;
-		} else if (!idUser.equals(other.idUser))
-			return false;
-		if (idUser == null) {
-			if (other.idUser != null)
-				return false;
-		} else if (!idUser.equals(other.idUser))
+		} else if (!idSchedule.equals(other.idSchedule))
 			return false;
 		return true;
 	}
-	
 }

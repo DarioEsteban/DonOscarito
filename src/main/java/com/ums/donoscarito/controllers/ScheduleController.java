@@ -9,7 +9,7 @@ import com.usm.donoscarito.entities.Schedule;
 
 public interface ScheduleController {
 
-	public List<Schedule> getByFieldDate(Integer field, Date date);
+	public List<Schedule> getByFieldDateAvailable(Integer field, Date date, Boolean available); 
 	
-	public ResponseEntity<String> update(List<Schedule> schedules);
+	public ResponseEntity<String> update(Schedule schedule);
 }

@@ -17,7 +17,7 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	public void save(Reservation reservation) {
-		if(!reservationRepository.existsById(new ReservationId(reservation.getIdField(), reservation.getIdUser(),reservation.getDate())))
+		if(!reservationRepository.existsById(new ReservationId(reservation.getIdField(), reservation.getIdUser(), reservation.getIdBlock(), reservation.getDate())))
 		{
 			reservationRepository.save(reservation);
 		}
@@ -29,7 +29,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public void cancel(Reservation reservation) {
 		//Armar PK compuesta
-		ReservationId reservationId = new ReservationId(reservation.getIdField(), reservation.getIdUser(),reservation.getDate());
+		ReservationId reservationId = new ReservationId(reservation.getIdField(), reservation.getIdUser(), reservation.getIdBlock(), reservation.getDate());
 		//Validar existencia de elemento
 		if(reservationRepository.existsById(reservationId))
 		{
@@ -60,7 +60,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public void update(Reservation reservation) {
 		//Armar PK compusta
-		ReservationId reservationId = new ReservationId(reservation.getIdField(), reservation.getIdUser(),reservation.getDate());
+		ReservationId reservationId = new ReservationId(reservation.getIdField(), reservation.getIdUser(),reservation.getIdBlock(), reservation.getDate());
 		
 		if(reservationRepository.existsById(reservationId))
 		{
@@ -71,8 +71,7 @@ public class ReservationServiceImpl implements ReservationService {
 				Reservation reservationToUpdate = reservationFind.get();
 				//Configurar clase
 				reservationToUpdate.setDate(reservation.getDate());
-				reservationToUpdate.setInitTime(reservation.getInitTime());
-				reservationToUpdate.setFinalTime(reservation.getFinalTime());
+				reservationToUpdate.setIdBlock(reservation.getIdBlock()); 
 				
 				if(reservation.getIdPayment() != null)
 					reservationToUpdate.setIdState(reservation.getIdPayment());

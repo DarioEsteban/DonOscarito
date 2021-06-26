@@ -39,9 +39,9 @@ public class ScheduleControllerImpl implements ScheduleController {
 	 * Método Get para obtener los bloques de horario para una cancha y día en específico. 
 	 * */
 	@ApiOperation(value = "Obtener bloques de horarios por cancha y fecha.")
-	@RequestMapping(value = "/list/{field}/{date}", method = RequestMethod.GET, produces={"application/json"})	
+	@RequestMapping(value = "/list/{field}/{date}/{available}", method = RequestMethod.GET, produces={"application/json"})	
 	@Override
-	public List<Schedule> getByFieldDate(@PathVariable Integer field, @PathVariable Date date) {
+	public List<Schedule> getByFieldDateAvailable(@PathVariable Integer field, @PathVariable Date date, @PathVariable Boolean available) {
 		/*@PathVariable sirve para enlazar el parámetro pasado en @RequestMapping varaible.*/
 		
 		/*Crear lista de campos para pasar la variable que viene por parámetro*/
@@ -52,29 +52,30 @@ public class ScheduleControllerImpl implements ScheduleController {
 		List<Date> dateList = new ArrayList<Date>();
 		dateList.add(date);
 		
-		return scheduleService.findByidFieldInAndDateIn(fieldList, dateList);
+		return scheduleService.findByidFieldInAndDateInAndAvailableIn(field, date, available);
 	}
 
 	/*
 	 * Al probar con swagger, eliminar atributo finalTime e initTime; si se envía provoca error al no saber como parsearlo.
 	 * */
 	@ApiOperation(value = "Actualizar bloque de horario.")
-	@RequestMapping(value = "/update", method = RequestMethod.PATCH, produces={"application/json"})	
+	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces={"application/json"})	
 	@Override
-	public ResponseEntity<String> update(@RequestBody List<Schedule> schedules) {
+	public ResponseEntity<String> update(@RequestBody Schedule schedule) {
 		//ResponseEntity sirve para responder HttpStatus code.
-		try {
-			scheduleService.update(schedules);
+		try { 
+			scheduleService.update(schedule);
 			return new ResponseEntity<String>("",HttpStatus.OK);
 		}
 		catch(IllegalArgumentException iex)
-		{
+		{ 
 			//Cualquier error y mensaje que saquemos que sea así para capturarlo en angular y distingüirlo de un error común.
 			return new ResponseEntity<String>("{\"message\":\""+iex.getMessage()+"\"}",HttpStatus.CONFLICT);
 		}
 		catch(Exception ex)
-		{
+		{ 
 			return new ResponseEntity<String>("{\"message\":\""+ex.getMessage()+"\"}",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+ 
 }
