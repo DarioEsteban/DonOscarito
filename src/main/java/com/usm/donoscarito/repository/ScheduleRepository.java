@@ -13,7 +13,5 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 	 * Utiliza las palabras IN y AND para separar campos
 	 * En este caso es findBy<campoEntity>InAnd<campoEntiry>In
 	 * */
-	List<Schedule> findByidFieldInAndDateIn(List<Integer> field, List<Date> date);
-	
-	List<Schedule> findByidFieldInAndAvailableIn(List<Integer> field, List<Boolean> available);
+	List<Schedule> findByidFieldAndDateAndAvailable(Integer field, Date date, Boolean available); 
 }

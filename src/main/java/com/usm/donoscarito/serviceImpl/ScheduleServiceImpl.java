@@ -22,9 +22,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	 * Listar horarios para una cancha y fecha
 	 * */
 	@Override
-	public List<Schedule> findByidFieldInAndDateIn(List<Integer> fields, List<Date> dates) {
+	public List<Schedule> findByidFieldInAndDateInAndAvailableIn(Integer field, Date date, Boolean available) {
 		// TODO Auto-generated method stub
-		return scheduleRepository.findByidFieldInAndDateIn(fields, dates);
+		return scheduleRepository.findByidFieldAndDateAndAvailable(field, date, available);
 	}
 
 	/*
@@ -79,10 +79,5 @@ public class ScheduleServiceImpl implements ScheduleService {
 			throw new IllegalArgumentException("Error al actualizar los bloques de horarios.");
 		};
 	}
-
-	@Override
-	public List<Schedule> findByidFieldInAndAvailableIn(List<Integer> fields, List<Boolean> availables) {
-		// TODO Auto-generated method stub
-		return scheduleRepository.findByidFieldInAndAvailableIn(fields, availables);
-	}
+ 
 }

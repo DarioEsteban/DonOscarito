@@ -39,9 +39,9 @@ public class ScheduleControllerImpl implements ScheduleController {
 	 * Método Get para obtener los bloques de horario para una cancha y día en específico. 
 	 * */
 	@ApiOperation(value = "Obtener bloques de horarios por cancha y fecha.")
-	@RequestMapping(value = "/list/{field}/{date}", method = RequestMethod.GET, produces={"application/json"})	
+	@RequestMapping(value = "/list/{field}/{date}/{available}", method = RequestMethod.GET, produces={"application/json"})	
 	@Override
-	public List<Schedule> getByFieldDate(@PathVariable Integer field, @PathVariable Date date) {
+	public List<Schedule> getByFieldDateAvailable(@PathVariable Integer field, @PathVariable Date date, @PathVariable Boolean available) {
 		/*@PathVariable sirve para enlazar el parámetro pasado en @RequestMapping varaible.*/
 		
 		/*Crear lista de campos para pasar la variable que viene por parámetro*/
@@ -52,7 +52,7 @@ public class ScheduleControllerImpl implements ScheduleController {
 		List<Date> dateList = new ArrayList<Date>();
 		dateList.add(date);
 		
-		return scheduleService.findByidFieldInAndDateIn(fieldList, dateList);
+		return scheduleService.findByidFieldInAndDateInAndAvailableIn(field, date, available);
 	}
 
 	/*
@@ -77,23 +77,5 @@ public class ScheduleControllerImpl implements ScheduleController {
 			return new ResponseEntity<String>("{\"message\":\""+ex.getMessage()+"\"}",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-	/*
-	 * Método Get para obtener los bloques de horario por disponibilidad. 
-	 * */
-	@ApiOperation(value = "Obtener bloques de horarios por disponibilidad.")
-	@RequestMapping(value = "/list1/{field}/{available}", method = RequestMethod.GET, produces={"application/json"})	
-	@Override
-	public List<Schedule> getByFieldAvailable(@PathVariable Integer field, @PathVariable Boolean available) {
-		/*@PathVariable sirve para enlazar el parámetro pasado en @RequestMapping variable.*/
-		
-		List<Integer> fieldList = new ArrayList<Integer>();
-		fieldList.add(field);
-		
-		/*Crear lista de campos para pasar la variable que viene por parámetro*/
-		List<Boolean> availableList = new ArrayList<Boolean>();
-		availableList.add(available); 
-		
-		return scheduleService.findByidFieldInAndAvailableIn(fieldList, availableList);
-	}
+ 
 }

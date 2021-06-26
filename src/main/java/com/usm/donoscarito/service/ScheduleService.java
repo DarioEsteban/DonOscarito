@@ -6,10 +6,8 @@ import com.usm.donoscarito.entities.Schedule;
 
 public interface ScheduleService {
 
-	public List<Schedule> findByidFieldInAndDateIn(List<Integer> fields, List<Date> dates);
-	
-	public List<Schedule> findByidFieldInAndAvailableIn(List<Integer> fields,List<Boolean> availables);
-	
+	public List<Schedule> findByidFieldInAndDateInAndAvailableIn(Integer field, Date date, Boolean available);
+	 
 	public void update(Schedule schedule);
 	
 }
