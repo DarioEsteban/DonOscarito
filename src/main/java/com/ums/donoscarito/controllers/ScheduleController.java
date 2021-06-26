@@ -13,5 +13,5 @@ public interface ScheduleController {
 	
 	public List<Schedule> getByFieldAvailable(Integer field, Boolean available);
 	
-	public ResponseEntity<String> update(List<Schedule> schedules);
+	public ResponseEntity<String> update(Schedule schedule);
 }

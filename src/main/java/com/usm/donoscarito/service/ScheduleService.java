@@ -10,6 +10,6 @@ public interface ScheduleService {
 	
 	public List<Schedule> findByidFieldInAndAvailableIn(List<Integer> fields,List<Boolean> availables);
 	
-	public void update(List<Schedule> schedules);
+	public void update(Schedule schedule);
 	
 }

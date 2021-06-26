@@ -59,21 +59,21 @@ public class ScheduleControllerImpl implements ScheduleController {
 	 * Al probar con swagger, eliminar atributo finalTime e initTime; si se envía provoca error al no saber como parsearlo.
 	 * */
 	@ApiOperation(value = "Actualizar bloque de horario.")
-	@RequestMapping(value = "/update", method = RequestMethod.PATCH, produces={"application/json"})	
+	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces={"application/json"})	
 	@Override
-	public ResponseEntity<String> update(@RequestBody List<Schedule> schedules) {
+	public ResponseEntity<String> update(@RequestBody Schedule schedule) {
 		//ResponseEntity sirve para responder HttpStatus code.
-		try {
-			scheduleService.update(schedules);
+		try { 
+			scheduleService.update(schedule);
 			return new ResponseEntity<String>("",HttpStatus.OK);
 		}
 		catch(IllegalArgumentException iex)
-		{
+		{ 
 			//Cualquier error y mensaje que saquemos que sea así para capturarlo en angular y distingüirlo de un error común.
 			return new ResponseEntity<String>("{\"message\":\""+iex.getMessage()+"\"}",HttpStatus.CONFLICT);
 		}
 		catch(Exception ex)
-		{
+		{ 
 			return new ResponseEntity<String>("{\"message\":\""+ex.getMessage()+"\"}",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
