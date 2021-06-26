@@ -11,5 +11,7 @@ public interface UserController {
 	public ResponseEntity<String> updateUser(User user);
 	
 	public List<User> getUsers();
+
+	public List<User> findByEmailPassword(String email, String pass);
 	
 }

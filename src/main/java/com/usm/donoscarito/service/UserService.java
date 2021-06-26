@@ -11,5 +11,7 @@ public interface UserService {
 	public void update(User user);
 	
 	public List<User> getUsers();
+
+	public List<User> findByEmailPassword(String email, String pass);
 	
 }

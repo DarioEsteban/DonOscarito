@@ -3,6 +3,10 @@ package com.usm.donoscarito.serviceImpl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.User;
@@ -15,6 +19,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 
+	@PersistenceContext
+	EntityManager entityManager;
+	  
 	@Override
 	public void save(User user) {
 		userRepository.save(user);
@@ -68,6 +75,15 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll();
 	}
 
-
+	@Override
+	public List<User> findByEmailPassword(String email, String pass) {
+		@SuppressWarnings("unchecked")
+		List<User> userList = entityManager.createQuery("Select u from User u where u.email = ?1 and u.password = ?2")
+		.setParameter(1, email)
+		.setParameter(2, pass)
+		.getResultList();
+		
+		return userList;
+	}
 
 }

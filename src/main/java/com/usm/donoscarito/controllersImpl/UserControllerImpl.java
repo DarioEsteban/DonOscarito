@@ -75,5 +75,13 @@ public class UserControllerImpl implements UserController {
 
 		return userService.getUsers();
 	}
+	
+	@ApiOperation(value = "Login")
+    @RequestMapping(value ="/login", method = RequestMethod.POST, produces={"application/json"})	
+	@Override
+    public List<User> findByEmailPassword(String email, String pass) {
+
+        return userService.findByEmailPassword(email,pass);
+    }
 
 }

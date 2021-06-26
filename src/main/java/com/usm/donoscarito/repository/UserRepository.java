@@ -6,4 +6,5 @@ import com.usm.donoscarito.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
+	
 }
