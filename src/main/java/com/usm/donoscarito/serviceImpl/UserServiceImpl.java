@@ -30,9 +30,29 @@ public class UserServiceImpl implements UserService {
 			if(userToUpdate.isPresent()) {
 				// Configurar clase
 				User userUpdate = userToUpdate.get();
-				//fieldToUpdate.setIdState(field.getIdState()); 
-				userUpdate.setUserType(user.getUserType());
-				userUpdate.setName(user.getName());
+				
+				if(user.getUserType() != null) {
+					userUpdate.setUserType(user.getUserType());
+				}
+				if(user.getEmail() != null) {
+					userUpdate.setEmail(user.getEmail());
+				}
+				
+				if(user.getName() != null) {
+					userUpdate.setName(user.getName());
+				}
+				
+				if(user.getLastName()!= null) {
+					userUpdate.setLastName(user.getLastName());
+				}
+				
+				if(user.getPhone() != null) {
+					userUpdate.setPhone(user.getPhone());
+				}
+				
+				if(user.getPassword() != null) {
+					userUpdate.setPassword(user.getPassword());
+				}
 				// Modificar
 				userRepository.save(userUpdate);
 			}
@@ -47,5 +67,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userRepository.findAll();
 	}
+
+
 
 }

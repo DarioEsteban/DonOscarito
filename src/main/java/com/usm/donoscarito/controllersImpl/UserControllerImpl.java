@@ -31,7 +31,6 @@ public class UserControllerImpl implements UserController {
 
 	@Autowired
 	UserService userService;
-	//private List<User> aux2;
 	
 	@ApiOperation(value = "Agregar una usuario.")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces={"application/json"})	
