@@ -1,5 +1,7 @@
 package com.usm.donoscarito.controllersImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ums.donoscarito.controllers.ReservationController;
@@ -82,6 +85,13 @@ public class ReservationControllerImpl implements ReservationController {
 		{
 			return new ResponseEntity<String>("{\"message\":\""+ex.getMessage()+"\"}",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@ApiOperation(value = "Modificar una reserva.")
+	@RequestMapping(value = "/list/{idUser}", method = RequestMethod.GET, produces={"application/json"})	
+	@Override
+	public List<Reservation> getReservationsByUser(@RequestParam Integer idUser) {
+		return reservationService.findByidUser(idUser);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.usm.donoscarito.serviceImpl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,11 @@ public class ReservationServiceImpl implements ReservationService {
 			throw new IllegalArgumentException("No existe una reserva con las características seleccionadas.");
 		}
 		
+	}
+
+	@Override
+	public List<Reservation> findByidUser(Integer idUser) {
+		return reservationRepository.findByIdUser(idUser);
 	}
 
 }
