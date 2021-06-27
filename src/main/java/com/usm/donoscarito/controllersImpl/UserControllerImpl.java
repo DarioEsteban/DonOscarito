@@ -79,9 +79,9 @@ public class UserControllerImpl implements UserController {
 	@ApiOperation(value = "Login")
     @RequestMapping(value ="/login", method = RequestMethod.POST, produces={"application/json"})	
 	@Override
-    public List<User> findByEmailPassword(String email, String pass) {
+    public List<User> findByEmailPassword(@RequestBody User user) {
 
-        return userService.findByEmailPassword(email,pass);
+        return userService.findByEmailPassword(user.getEmail(),user.getPassword());
     }
 
 }

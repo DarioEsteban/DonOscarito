@@ -12,6 +12,6 @@ public interface UserController {
 	
 	public List<User> getUsers();
 
-	public List<User> findByEmailPassword(String email, String pass);
+	public List<User> findByEmailPassword(User user);
 	
 }
