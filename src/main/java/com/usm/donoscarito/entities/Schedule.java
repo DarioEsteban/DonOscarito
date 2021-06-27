@@ -18,7 +18,6 @@ import com.usm.donoscarito.entities.compositeId.ScheduleId;
 public class Schedule {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_bloque")
 	private Integer idSchedule;
 
