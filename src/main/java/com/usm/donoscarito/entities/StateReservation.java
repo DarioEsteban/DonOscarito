@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity 
+@Table(name = "estado_reserva")
 public class StateReservation {
 
 	@Id
@@ -16,6 +18,9 @@ public class StateReservation {
 	
 	@Column(name="descripcion")
 	private String descripcion;
+	
+	
+	public StateReservation() {}
 
 	public Integer getIdState() {
 		return idState;
@@ -32,8 +37,4 @@ public class StateReservation {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
-	
-	
-	
 }

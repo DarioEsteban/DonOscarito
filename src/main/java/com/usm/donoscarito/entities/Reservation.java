@@ -37,19 +37,17 @@ public class Reservation {
 	@Column(name="fecha_reserva")
 	private Date date;
 	
-	@Column(name="id_pago")
-	private Integer idPayment;
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_pago")
+	private Payment payment;
 	
-	@Column(name="id_estado_reserva")
-	private Integer idState;
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_estado_reserva")
+	private StateReservation state;
 	
 	@OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cancha", insertable = false, updatable = false)
 	private Field field;
-	
-	@OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
-	private User user;
  
 	@OneToOne(fetch = FetchType.EAGER)
     @JoinColumns({
@@ -90,20 +88,20 @@ public class Reservation {
 		this.date = date;
 	}
 
-	public Integer getIdPayment() {
-		return idPayment;
+	public Payment getPayment() {
+		return payment;
 	}
 
-	public void setIdPayment(Integer idPayment) {
-		this.idPayment = idPayment;
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
-	public Integer getIdState() {
-		return idState;
+	public StateReservation getState() {
+		return state;
 	}
 
-	public void setIdState(Integer idState) {
-		this.idState = idState;
+	public void setState(StateReservation state) {
+		this.state = state;
 	}
 
 	public Field getField() {
@@ -114,14 +112,6 @@ public class Reservation {
 		this.field = field;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public Schedule getSchedule() {
 		return schedule;
 	}
@@ -129,6 +119,4 @@ public class Reservation {
 	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
 	}
-	
-	
 }

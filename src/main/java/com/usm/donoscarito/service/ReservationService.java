@@ -1,8 +1,8 @@
 package com.usm.donoscarito.service;
 
 import java.util.List;
-
 import com.usm.donoscarito.entities.Reservation;
+import com.usm.donoscarito.entities.ReservationUpdate;
 
 public interface ReservationService {
 
@@ -10,7 +10,7 @@ public interface ReservationService {
 	
 	public void cancel(Reservation reservation);
 	
-	public void update(Reservation reservation);
+	public void update(ReservationUpdate reservationUpdate);
 	
 	public List<Reservation> findByidUser(Integer idUser);
 }
