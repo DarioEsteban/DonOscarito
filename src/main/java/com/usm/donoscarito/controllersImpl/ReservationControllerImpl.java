@@ -50,7 +50,7 @@ public class ReservationControllerImpl implements ReservationController {
 	}
 
 	@ApiOperation(value = "Anular una reserva.")
-	@RequestMapping(value = "/cancel", method = RequestMethod.PATCH, produces={"application/json"})	
+	@RequestMapping(value = "/cancel", method = RequestMethod.PUT, produces={"application/json"})	
 	@Override
 	public ResponseEntity<String> cancelReservation(@RequestBody Reservation reservation) {
 		try {

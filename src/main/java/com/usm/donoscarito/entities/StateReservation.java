@@ -17,7 +17,7 @@ public class StateReservation {
 	private Integer idState;
 	
 	@Column(name="descripcion")
-	private String descripcion;
+	private String description;
 	
 	
 	public StateReservation() {}
@@ -30,11 +30,11 @@ public class StateReservation {
 		this.idState = idState;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
