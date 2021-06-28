@@ -1,8 +1,25 @@
 package com.usm.donoscarito.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "pago")
 public class Payment {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_pago")
 	private int idPayment;
+	
+	@Column(name="metodo")
 	private String method;
+	
+	@Column(name="monto")
 	private int value;
 	
 	public int getIdPayment() {

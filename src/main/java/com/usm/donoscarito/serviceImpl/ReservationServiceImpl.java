@@ -1,10 +1,12 @@
 package com.usm.donoscarito.serviceImpl;
 
+import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.Reservation;
+import com.usm.donoscarito.entities.ReservationUpdate;
+import com.usm.donoscarito.entities.StateReservation;
 import com.usm.donoscarito.entities.compositeId.ReservationId;
 import com.usm.donoscarito.repository.ReservationRepository;
 import com.usm.donoscarito.service.ReservationService;
@@ -39,9 +41,12 @@ public class ReservationServiceImpl implements ReservationService {
 			if(reservationFind.isPresent()) {
 				Reservation reservationToUpdate = reservationFind.get();
 				//Validar que no contenga pago
-				if(reservationToUpdate.getIdPayment() == null) {
+				if(reservationFind.get().getPayment() == null)
+				{
+					StateReservation state = new StateReservation();
+					state.setIdState(2);
 					//Configurar clase
-					reservationToUpdate.setIdState(2);
+					reservationToUpdate.setState(state);
 					reservationToUpdate.setDate(reservation.getDate());	
 					//Anular
 					reservationRepository.save(reservationToUpdate);
@@ -58,32 +63,47 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public void update(Reservation reservation) {
+	public void update(ReservationUpdate reservationUpdate) {
 		//Armar PK compusta
-		ReservationId reservationId = new ReservationId(reservation.getIdField(), reservation.getIdUser(),reservation.getIdBlock(), reservation.getDate());
-		
+		ReservationId reservationId = new ReservationId(
+				reservationUpdate.getReservation().getIdField(), 
+				reservationUpdate.getReservation().getIdUser(),
+				reservationUpdate.getReservation().getIdBlock(), 
+				reservationUpdate.getReservation().getDate());
+
 		if(reservationRepository.existsById(reservationId))
 		{
-			//Rescatar reserva
+			Reservation reservaToUpdate = new Reservation();
 			Optional<Reservation> reservationFind = reservationRepository.findById(reservationId);
-			
 			if(reservationFind.isPresent()) {
-				Reservation reservationToUpdate = reservationFind.get();
-				//Configurar clase
-				reservationToUpdate.setDate(reservation.getDate());
-				reservationToUpdate.setIdBlock(reservation.getIdBlock()); 
-				
-				if(reservation.getIdPayment() != null)
-					reservationToUpdate.setIdState(reservation.getIdPayment());
-				
-				//Modificar
-				reservationRepository.save(reservationToUpdate);
-			}			
+				//Rescatar reserva
+				if(reservationFind.get().getPayment() == null)
+				{
+					//Configurar clase
+					reservaToUpdate.setIdField(reservationFind.get().getIdField());
+					reservaToUpdate.setIdBlock(reservationUpdate.getSchedule().getIdSchedule());
+					reservaToUpdate.setIdUser(reservationFind.get().getIdUser());
+					reservaToUpdate.setDate(reservationFind.get().getDate());
+					//reservationToUpdate.setIdPayment(reservationToUpdate.getIdPayment());
+					reservaToUpdate.setState(reservationFind.get().getState());
+					//Modificar
+					reservationRepository.save(reservaToUpdate);
+				}
+				else {
+					throw new IllegalArgumentException("La reserva se encuentra pagada, no se puede modificar.");
+				}
+			}
+					
 		}
 		else {
 			throw new IllegalArgumentException("No existe una reserva con las características seleccionadas.");
 		}
 		
+	}
+
+	@Override
+	public List<Reservation> findByidUser(Integer idUser) {
+		return reservationRepository.findByIdUser(idUser);
 	}
 
 }

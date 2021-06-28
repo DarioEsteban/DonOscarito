@@ -1,13 +1,9 @@
 package com.usm.donoscarito.serviceImpl;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.usm.donoscarito.entities.Schedule;
 import com.usm.donoscarito.repository.ScheduleRepository;
 import com.usm.donoscarito.service.ScheduleService;

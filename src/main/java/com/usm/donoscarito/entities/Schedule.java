@@ -9,7 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
- 
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.usm.donoscarito.entities.compositeId.ScheduleId;
 
 @Entity
@@ -18,7 +21,6 @@ import com.usm.donoscarito.entities.compositeId.ScheduleId;
 public class Schedule {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_bloque")
 	private Integer idSchedule;
 
@@ -26,7 +28,8 @@ public class Schedule {
 	@Column(name="id_cancha")
 	private Integer idField;
 
-	@Id
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name="fecha")
 	private Date date;
 	

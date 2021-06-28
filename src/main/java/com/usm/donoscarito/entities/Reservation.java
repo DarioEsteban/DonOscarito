@@ -3,12 +3,14 @@ package com.usm.donoscarito.entities;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.usm.donoscarito.entities.compositeId.ReservationId;
 
@@ -35,12 +37,25 @@ public class Reservation {
 	@Column(name="fecha_reserva")
 	private Date date;
 	
-	@Column(name="id_pago")
-	private Integer idPayment;
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_pago")
+	private Payment payment;
 	
-	@Column(name="id_estado_reserva")
-	private Integer idState;
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_estado_reserva")
+	private StateReservation state;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_cancha", insertable = false, updatable = false)
+	private Field field;
  
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumns({
+    	@JoinColumn(name = "id_bloque", insertable = false, updatable = false),
+    	@JoinColumn(name = "id_cancha", insertable = false, updatable = false)
+    })
+	private Schedule schedule;
+
 	public Integer getIdField() {
 		return idField;
 	}
@@ -57,12 +72,12 @@ public class Reservation {
 		this.idUser = idUser;
 	}
 
-	public Integer getIdPayment() {
-		return idPayment;
+	public Integer getIdBlock() {
+		return idBlock;
 	}
 
-	public void setIdPayment(Integer idPayment) {
-		this.idPayment = idPayment;
+	public void setIdBlock(Integer idBlock) {
+		this.idBlock = idBlock;
 	}
 
 	public Date getDate() {
@@ -73,20 +88,35 @@ public class Reservation {
 		this.date = date;
 	}
 
-	public Integer getIdState() {
-		return idState;
+	public Payment getPayment() {
+		return payment;
 	}
 
-	public void setIdState(Integer idState) {
-		this.idState = idState;
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
-	public Integer getIdBlock() {
-		return idBlock;
+	public StateReservation getState() {
+		return state;
 	}
 
-	public void setIdBlock(Integer idBlock) {
-		this.idBlock = idBlock;
+	public void setState(StateReservation state) {
+		this.state = state;
 	}
- 
+
+	public Field getField() {
+		return field;
+	}
+
+	public void setField(Field field) {
+		this.field = field;
+	}
+
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
+	}
 }
