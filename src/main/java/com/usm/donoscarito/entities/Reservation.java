@@ -34,11 +34,10 @@ public class Reservation {
 	@Column(name="id_usuario")
 	private Integer idUser;
 	
-	/*
 	@Id
 	@Column(name="id_bloque")
 	private Integer idBlock;
-	*/
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Id
@@ -87,7 +86,7 @@ public class Reservation {
 	public void setIdUser(Integer idUser) {
 		this.idUser = idUser;
 	}
-/*
+
 	public Integer getIdBlock() {
 		return idBlock;
 	}
@@ -95,7 +94,7 @@ public class Reservation {
 	public void setIdBlock(Integer idBlock) {
 		this.idBlock = idBlock;
 	}
-*/
+
 	public Date getDate() {
 		return date;
 	}
