@@ -85,7 +85,7 @@ public class ReservationControllerImpl implements ReservationController {
 		}
 	}
 
-	@ApiOperation(value = "Modificar una reserva.")
+	@ApiOperation(value = "Lista las reservas para un usuario.")
 	@RequestMapping(value = "/list/{idUser}", method = RequestMethod.GET, produces={"application/json"})	
 	@Override
 	public List<Reservation> getReservationsByUser(@RequestParam Integer idUser) {

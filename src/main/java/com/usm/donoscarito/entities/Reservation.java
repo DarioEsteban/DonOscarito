@@ -4,6 +4,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -18,6 +20,11 @@ import com.usm.donoscarito.entities.compositeId.ReservationId;
 @IdClass(ReservationId.class)
 @Table(name = "reserva")
 public class Reservation {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_reserva")
+	private Integer idReservation;
 	
 	@Id
 	@Column(name="id_cancha")
@@ -56,6 +63,14 @@ public class Reservation {
     })
 	private Schedule schedule;
 
+	public Integer getIdReservation() {
+		return getIdReservation();
+	}
+
+	public void setIdReservation(Integer idReservation) {
+		this.idReservation = idReservation;
+	}
+	
 	public Integer getIdField() {
 		return idField;
 	}
