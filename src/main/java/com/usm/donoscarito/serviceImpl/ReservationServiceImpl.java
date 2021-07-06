@@ -81,7 +81,7 @@ public class ReservationServiceImpl implements ReservationService {
 				{
 					//Configurar clase
 					reservaToUpdate.setIdField(reservationFind.get().getIdField());
-					reservaToUpdate.setIdBlock(reservationUpdate.getSchedule().getIdSchedule());
+					//reservaToUpdate.setIdBlock(reservationUpdate.getSchedule().getIdSchedule());
 					reservaToUpdate.setIdUser(reservationFind.get().getIdUser());
 					reservaToUpdate.setDate(reservationFind.get().getDate());
 					//reservationToUpdate.setIdPayment(reservationToUpdate.getIdPayment());

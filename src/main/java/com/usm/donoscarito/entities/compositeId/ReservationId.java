@@ -5,11 +5,16 @@ import java.util.Date;
 
 public class ReservationId implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7956775847541732356L;
+
 	private Integer idField;
 	
 	private Integer idUser;
 	
-	private Integer idBlock;
+	//private Integer idBlock;
 	
 	private Date date;
 	
@@ -20,7 +25,7 @@ public class ReservationId implements Serializable {
 	public ReservationId(Integer idField, Integer idUser, Integer idBlock, Date date) {
 		this.idField = idField;
 		this.idUser = idUser;
-		this.idBlock = idBlock;
+	//	this.idBlock = idBlock;
 		this.date = date;
 	}
 
@@ -30,7 +35,7 @@ public class ReservationId implements Serializable {
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((idField == null) ? 0 : idField.hashCode());
-		result = prime * result + ((idBlock == null) ? 0 : idBlock.hashCode());
+		//result = prime * result + ((idBlock == null) ? 0 : idBlock.hashCode());
 		result = prime * result + ((idUser == null) ? 0 : idUser.hashCode());
 		return result;
 	}
