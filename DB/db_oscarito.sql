@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-06-2021 a las 02:39:19
--- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 8.0.3
+-- Tiempo de generación: 06-07-2021 a las 06:42:32
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -106,25 +106,25 @@ CREATE TABLE `horario_disponible` (
 -- Volcado de datos para la tabla `horario_disponible`
 --
 
-INSERT INTO `horario_disponible` (`id_cancha`, `fecha`, `bloque_inicio`, `bloque_fin`, `estado`) VALUES
-(1, '2021-06-26', '10:00:00', '11:00:00', 1),
-(2, '2021-06-26', '10:00:00', '11:00:00', 1),
-(1, '2021-06-26', '11:00:00', '12:00:00', 0),
-(2, '2021-06-26', '11:00:00', '12:00:00', 1),
-(1, '2021-06-26', '12:00:00', '13:00:00', 1),
-(2, '2021-06-26', '12:00:00', '13:00:00', 1),
-(1, '2021-06-26', '13:00:00', '14:00:00', 0),
-(2, '2021-06-26', '13:00:00', '14:00:00', 1),
-(1, '2021-06-26', '14:00:00', '15:00:00', 1),
-(2, '2021-06-26', '14:00:00', '15:00:00', 1),
-(1, '2021-06-26', '15:00:00', '16:00:00', 1),
-(2, '2021-06-26', '15:00:00', '16:00:00', 1),
-(1, '2021-06-26', '16:00:00', '17:00:00', 1),
-(2, '2021-06-26', '16:00:00', '17:00:00', 1),
-(1, '2021-06-26', '17:00:00', '18:00:00', 1),
-(2, '2021-06-26', '17:00:00', '18:00:00', 1),
-(1, '2021-06-26', '18:00:00', '19:00:00', 1),
-(2, '2021-06-26', '18:00:00', '19:00:00', 1);
+INSERT INTO `horario_disponible` (`id_bloque`, `id_cancha`, `fecha`, `bloque_inicio`, `bloque_fin`, `estado`) VALUES
+(0, 1, '2021-06-26', '10:00:00', '11:00:00', 1),
+(0, 2, '2021-06-26', '10:00:00', '11:00:00', 1),
+(0, 1, '2021-06-26', '11:00:00', '12:00:00', 0),
+(0, 2, '2021-06-26', '11:00:00', '12:00:00', 1),
+(0, 1, '2021-06-26', '12:00:00', '13:00:00', 1),
+(0, 2, '2021-06-26', '12:00:00', '13:00:00', 1),
+(0, 1, '2021-06-26', '13:00:00', '14:00:00', 0),
+(0, 2, '2021-06-26', '13:00:00', '14:00:00', 1),
+(0, 1, '2021-06-26', '14:00:00', '15:00:00', 1),
+(0, 2, '2021-06-26', '14:00:00', '15:00:00', 1),
+(0, 1, '2021-06-26', '15:00:00', '16:00:00', 1),
+(0, 2, '2021-06-26', '15:00:00', '16:00:00', 1),
+(0, 1, '2021-06-26', '16:00:00', '17:00:00', 1),
+(0, 2, '2021-06-26', '16:00:00', '17:00:00', 1),
+(0, 1, '2021-06-26', '17:00:00', '18:00:00', 1),
+(0, 2, '2021-06-26', '17:00:00', '18:00:00', 1),
+(0, 1, '2021-06-26', '18:00:00', '19:00:00', 1),
+(0, 2, '2021-06-26', '18:00:00', '19:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -152,6 +152,7 @@ INSERT INTO `pago` (`id_pago`, `metodo`, `monto`) VALUES
 --
 
 CREATE TABLE `reserva` (
+  `id_reserva` int(11) NOT NULL,
   `id_cancha` int(11) NOT NULL,
   `fecha_reserva` date NOT NULL,
   `id_bloque` int(11) NOT NULL,
@@ -164,9 +165,9 @@ CREATE TABLE `reserva` (
 -- Volcado de datos para la tabla `reserva`
 --
 
-INSERT INTO `reserva` (`id_cancha`, `fecha_reserva`, `id_bloque`, `id_usuario`, `id_pago`, `id_estado_reserva`) VALUES
-(1, '2021-06-28', 1, 1, NULL, 1),
-(1, '2021-06-29', 1, 1, NULL, 1);
+INSERT INTO `reserva` (`id_reserva`, `id_cancha`, `fecha_reserva`, `id_bloque`, `id_usuario`, `id_pago`, `id_estado_reserva`) VALUES
+(1, 1, '2021-06-28', 1, 1, NULL, 1),
+(2, 1, '2021-06-29', 1, 1, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -261,125 +262,20 @@ ALTER TABLE `estado_reserva`
   ADD PRIMARY KEY (`id_estado_reserva`);
 
 --
--- Indices de la tabla `horario_disponible`
---
-ALTER TABLE `horario_disponible`
-  ADD PRIMARY KEY (`id_bloque`,`id_cancha`,`fecha`) USING BTREE,
-  ADD KEY `fk_horario` (`id_cancha`);
-
---
--- Indices de la tabla `pago`
---
-ALTER TABLE `pago`
-  ADD PRIMARY KEY (`id_pago`);
-
---
 -- Indices de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  ADD PRIMARY KEY (`id_cancha`,`fecha_reserva`,`id_bloque`,`id_usuario`) USING BTREE,
-  ADD KEY `fk_estado_reserva` (`id_estado_reserva`),
-  ADD KEY `fk_pago` (`id_pago`),
-  ADD KEY `fk_usuario` (`id_usuario`),
-  ADD KEY `fl_bloque` (`id_bloque`) USING BTREE;
-
---
--- Indices de la tabla `tipo_cancha`
---
-ALTER TABLE `tipo_cancha`
-  ADD PRIMARY KEY (`id_tipo_cancha`);
-
---
--- Indices de la tabla `tipo_usuario`
---
-ALTER TABLE `tipo_usuario`
-  ADD PRIMARY KEY (`id_tipo_usuario`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id_usuario`),
-  ADD KEY `fk_tipo_usuario` (`id_tipo_usuario`);
+  ADD PRIMARY KEY (`id_reserva`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `cancha`
---
-ALTER TABLE `cancha`
-  MODIFY `id_cancha` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `estado_cancha`
---
-ALTER TABLE `estado_cancha`
-  MODIFY `id_estado_cancha` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `estado_reserva`
---
-ALTER TABLE `estado_reserva`
-  MODIFY `id_estado_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `pago`
---
-ALTER TABLE `pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `tipo_cancha`
---
-ALTER TABLE `tipo_cancha`
-  MODIFY `id_tipo_cancha` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `tipo_usuario`
---
-ALTER TABLE `tipo_usuario`
-  MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `cancha`
---
-ALTER TABLE `cancha`
-  ADD CONSTRAINT `fk_estado_cancha` FOREIGN KEY (`id_estado_cancha`) REFERENCES `estado_cancha` (`id_estado_cancha`),
-  ADD CONSTRAINT `fk_tipo_cancha` FOREIGN KEY (`id_tipo_cancha`) REFERENCES `tipo_cancha` (`id_tipo_cancha`);
-
---
--- Filtros para la tabla `horario_disponible`
---
-ALTER TABLE `horario_disponible`
-  ADD CONSTRAINT `fk_horario` FOREIGN KEY (`id_cancha`) REFERENCES `cancha` (`id_cancha`);
-
---
--- Filtros para la tabla `reserva`
+-- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  ADD CONSTRAINT `fk_cancha` FOREIGN KEY (`id_cancha`) REFERENCES `cancha` (`id_cancha`),
-  ADD CONSTRAINT `fk_estado_reserva` FOREIGN KEY (`id_estado_reserva`) REFERENCES `estado_reserva` (`id_estado_reserva`),
-  ADD CONSTRAINT `fk_pago` FOREIGN KEY (`id_pago`) REFERENCES `pago` (`id_pago`),
-  ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  ADD CONSTRAINT `reserva_ibfk_1` FOREIGN KEY (`id_bloque`) REFERENCES `horario_disponible` (`id_bloque`);
-
---
--- Filtros para la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD CONSTRAINT `fk_tipo_usuario` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `tipo_usuario` (`id_tipo_usuario`);
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
