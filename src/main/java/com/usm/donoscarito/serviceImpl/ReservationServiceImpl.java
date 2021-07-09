@@ -5,9 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.Reservation;
-import com.usm.donoscarito.entities.ReservationUpdate;
 import com.usm.donoscarito.entities.StateReservation;
-import com.usm.donoscarito.entities.compositeId.ReservationId;
 import com.usm.donoscarito.repository.ReservationRepository;
 import com.usm.donoscarito.service.ReservationService;
 
@@ -19,7 +17,7 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	public void save(Reservation reservation) {
-		if(!reservationRepository.existsById(new ReservationId(reservation.getIdField(), reservation.getIdUser(), reservation.getIdBlock(), reservation.getDate())))
+		if(!reservationRepository.existsById(reservation.getIdReservation()))
 		{
 			reservationRepository.save(reservation);
 		}
@@ -30,13 +28,11 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public void cancel(Reservation reservation) {
-		//Armar PK compuesta
-		ReservationId reservationId = new ReservationId(reservation.getIdField(), reservation.getIdUser(), reservation.getIdBlock(), reservation.getDate());
 		//Validar existencia de elemento
-		if(reservationRepository.existsById(reservationId))
+		if(reservationRepository.existsById(reservation.getIdReservation()))
 		{
 			//Rescatar reserva
-			Optional<Reservation> reservationFind = reservationRepository.findById(reservationId);
+			Optional<Reservation> reservationFind = reservationRepository.findById(reservation.getIdReservation());
 			
 			if(reservationFind.isPresent()) {
 				Reservation reservationToUpdate = reservationFind.get();
@@ -63,30 +59,24 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public void update(ReservationUpdate reservationUpdate) {
-		//Armar PK compusta
-		ReservationId reservationId = new ReservationId(
-				reservationUpdate.getReservation().getIdField(), 
-				reservationUpdate.getReservation().getIdUser(),
-				reservationUpdate.getReservation().getIdBlock(), 
-				reservationUpdate.getReservation().getDate());
+	public void update(Reservation reservationUpdate) {
 
-		if(reservationRepository.existsById(reservationId))
+		// Verificar que elemento exista en la base de datos
+		if(reservationRepository.existsById(reservationUpdate.getIdReservation()))
 		{
+			//Crear nuevo objeto de reserva que será enviado a la base de datos
 			Reservation reservaToUpdate = new Reservation();
-			Optional<Reservation> reservationFind = reservationRepository.findById(reservationId);
+			//Buscar objeto en base de datos según ID
+			Optional<Reservation> reservationFind = reservationRepository.findById(reservationUpdate.getIdReservation());
+			
 			if(reservationFind.isPresent()) {
-				//Rescatar reserva
+				//RValidar que no contenga pago registrado
 				if(reservationFind.get().getPayment() == null)
 				{
-					//Configurar clase
-					reservaToUpdate.setIdField(reservationFind.get().getIdField());
-					reservaToUpdate.setIdBlock(reservationUpdate.getSchedule().getIdSchedule());
-					reservaToUpdate.setIdUser(reservationFind.get().getIdUser());
-					reservaToUpdate.setDate(reservationFind.get().getDate());
-					//reservationToUpdate.setIdPayment(reservationToUpdate.getIdPayment());
-					reservaToUpdate.setState(reservationFind.get().getState());
-					//Modificar
+					reservaToUpdate = reservationFind.get();
+					//Modificar clase
+					reservaToUpdate.setIdBlock(reservationUpdate.getIdBlock());
+					//Guardar
 					reservationRepository.save(reservaToUpdate);
 				}
 				else {

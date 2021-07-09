@@ -7,17 +7,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.usm.donoscarito.entities.compositeId.ReservationId;
 
 @Entity
-@IdClass(ReservationId.class)
 @Table(name = "reserva")
 public class Reservation {
 	
@@ -26,21 +23,18 @@ public class Reservation {
 	@Column(name="id_reserva")
 	private Integer idReservation;
 	
-	@Id
-	@Column(name="id_cancha")
-	private Integer idField;
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_cancha")
+	private Field field;
 	
-	@Id
 	@Column(name="id_usuario")
 	private Integer idUser;
 	
-	@Id
 	@Column(name="id_bloque")
 	private Integer idBlock;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@Id
 	@Column(name="fecha_reserva")
 	private Date date;
 	
@@ -51,11 +45,8 @@ public class Reservation {
 	@OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_estado_reserva")
 	private StateReservation state;
-	
-	@OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_cancha", insertable = false, updatable = false)
-	private Field field;
- 
+
+	//Uso único para obtener información desde base de datos
 	@OneToOne(fetch = FetchType.EAGER)
     @JoinColumns({
     	@JoinColumn(name = "id_bloque", insertable = false, updatable = false),
@@ -64,19 +55,19 @@ public class Reservation {
 	private Schedule schedule;
 
 	public Integer getIdReservation() {
-		return getIdReservation();
+		return idReservation;
 	}
 
 	public void setIdReservation(Integer idReservation) {
 		this.idReservation = idReservation;
 	}
-	
-	public Integer getIdField() {
-		return idField;
+
+	public Field getField() {
+		return field;
 	}
 
-	public void setIdField(Integer idField) {
-		this.idField = idField;
+	public void setField(Field field) {
+		this.field = field;
 	}
 
 	public Integer getIdUser() {
@@ -119,14 +110,6 @@ public class Reservation {
 		this.state = state;
 	}
 
-	public Field getField() {
-		return field;
-	}
-
-	public void setField(Field field) {
-		this.field = field;
-	}
-
 	public Schedule getSchedule() {
 		return schedule;
 	}
@@ -134,4 +117,7 @@ public class Reservation {
 	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
 	}
+	
+	
+	
 }
