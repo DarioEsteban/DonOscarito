@@ -5,15 +5,20 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.Reservation;
+import com.usm.donoscarito.entities.Schedule;
 import com.usm.donoscarito.entities.StateReservation;
 import com.usm.donoscarito.repository.ReservationRepository;
+import com.usm.donoscarito.repository.ScheduleRepository;
 import com.usm.donoscarito.service.ReservationService;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
+	//Injección
 	@Autowired
 	ReservationRepository reservationRepository;
+	@Autowired
+	ScheduleRepository scheduleRepository;
 	
 	@Override
 	public void save(Reservation reservation) {
@@ -46,6 +51,13 @@ public class ReservationServiceImpl implements ReservationService {
 					reservationToUpdate.setDate(reservation.getDate());	
 					//Anular
 					reservationRepository.save(reservationToUpdate);
+					
+					//Habilitar bloque horario
+					Optional<Schedule> scheduleFind = scheduleRepository.findById(reservation.getIdBlock());
+					Schedule schedule = scheduleFind.get();
+					schedule.setAvailable(true);
+					scheduleRepository.save(schedule);
+					
 				}
 				else {
 					throw new IllegalArgumentException("La reserva se encuentra pagada, no se puede anular.");
@@ -78,6 +90,18 @@ public class ReservationServiceImpl implements ReservationService {
 					reservaToUpdate.setIdBlock(reservationUpdate.getIdBlock());
 					//Guardar
 					reservationRepository.save(reservaToUpdate);
+					
+					//Habilitar bloque horario anterior
+					Optional<Schedule> scheduleOldFind = scheduleRepository.findById(reservaToUpdate.getIdBlock());
+					Schedule scheduleOld = scheduleOldFind.get();
+					scheduleOld.setAvailable(true);
+					scheduleRepository.save(scheduleOld);
+					
+					//Bloquear bloque horario nuevo
+					Optional<Schedule> scheduleNewFind = scheduleRepository.findById(reservationUpdate.getIdBlock());
+					Schedule scheduleNew = scheduleNewFind.get();
+					scheduleNew.setAvailable(false);
+					scheduleRepository.save(scheduleNew);
 				}
 				else {
 					throw new IllegalArgumentException("La reserva se encuentra pagada, no se puede modificar.");

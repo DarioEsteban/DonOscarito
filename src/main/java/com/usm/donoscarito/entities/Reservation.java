@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,10 +47,7 @@ public class Reservation {
 
 	//Uso único para obtener información desde base de datos
 	@OneToOne(fetch = FetchType.EAGER)
-    @JoinColumns({
-    	@JoinColumn(name = "id_bloque", insertable = false, updatable = false),
-    	@JoinColumn(name = "id_cancha", insertable = false, updatable = false)
-    })
+	@JoinColumn(name = "id_bloque", insertable = false, updatable = false)
 	private Schedule schedule;
 
 	public Integer getIdReservation() {

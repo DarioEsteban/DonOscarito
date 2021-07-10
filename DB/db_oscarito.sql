@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 09-07-2021 a las 18:37:30
+-- Tiempo de generación: 10-07-2021 a las 17:11:22
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 7.4.19
 
@@ -108,8 +108,8 @@ CREATE TABLE `horario_disponible` (
 
 INSERT INTO `horario_disponible` (`id_bloque`, `id_cancha`, `fecha`, `bloque_inicio`, `bloque_fin`, `estado`) VALUES
 (1, 1, '2021-06-26', '10:00:00', '11:00:00', 1),
-(2, 2, '2021-06-26', '10:00:00', '11:00:00', 1),
-(3, 1, '2021-06-26', '11:00:00', '12:00:00', 0),
+(2, 2, '2021-07-12', '10:00:00', '11:00:00', 1),
+(3, 1, '2021-06-26', '11:00:00', '12:00:00', 1),
 (4, 2, '2021-06-26', '11:00:00', '12:00:00', 1),
 (5, 1, '2021-06-26', '12:00:00', '13:00:00', 1),
 (6, 2, '2021-06-26', '12:00:00', '13:00:00', 1),
@@ -166,8 +166,9 @@ CREATE TABLE `reserva` (
 --
 
 INSERT INTO `reserva` (`id_reserva`, `id_cancha`, `fecha_reserva`, `id_bloque`, `id_usuario`, `id_pago`, `id_estado_reserva`) VALUES
-(1, 1, '2021-06-28', 1, 1, NULL, 1),
-(2, 1, '2021-06-29', 1, 1, NULL, 1);
+(1, 1, '2021-06-28', 1, 1, NULL, 2),
+(2, 1, '2021-06-29', 6, 1, NULL, 1),
+(3, 2, '2021-07-14', 2, 1, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -265,7 +266,7 @@ ALTER TABLE `estado_reserva`
 -- Indices de la tabla `horario_disponible`
 --
 ALTER TABLE `horario_disponible`
-  ADD PRIMARY KEY (`id_bloque`,`id_cancha`,`fecha`) USING BTREE,
+  ADD PRIMARY KEY (`id_bloque`) USING BTREE,
   ADD KEY `fk_horario` (`id_cancha`);
 
 --
@@ -342,7 +343,7 @@ ALTER TABLE `pago`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_cancha`
