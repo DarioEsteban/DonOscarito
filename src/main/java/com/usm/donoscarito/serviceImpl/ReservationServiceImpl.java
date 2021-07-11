@@ -86,13 +86,15 @@ public class ReservationServiceImpl implements ReservationService {
 				if(reservationFind.get().getPayment() == null)
 				{
 					reservaToUpdate = reservationFind.get();
-					//Modificar clase
+					//Mantener ID de bloque horario anterior
+					Integer idBlockOld = reservaToUpdate.getIdBlock();
+					//Modificar clase con nuevo bloque horario
 					reservaToUpdate.setIdBlock(reservationUpdate.getIdBlock());
 					//Guardar
 					reservationRepository.save(reservaToUpdate);
 					
 					//Habilitar bloque horario anterior
-					Optional<Schedule> scheduleOldFind = scheduleRepository.findById(reservaToUpdate.getIdBlock());
+					Optional<Schedule> scheduleOldFind = scheduleRepository.findById(idBlockOld);
 					Schedule scheduleOld = scheduleOldFind.get();
 					scheduleOld.setAvailable(true);
 					scheduleRepository.save(scheduleOld);
