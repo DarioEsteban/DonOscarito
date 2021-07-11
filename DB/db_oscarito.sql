@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 26-06-2021 a las 02:39:19
--- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 8.0.3
+-- Servidor: localhost:3306
+-- Tiempo de generación: 10-07-2021 a las 17:11:22
+-- Versión del servidor: 5.7.33
+-- Versión de PHP: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -106,25 +106,25 @@ CREATE TABLE `horario_disponible` (
 -- Volcado de datos para la tabla `horario_disponible`
 --
 
-INSERT INTO `horario_disponible` (`id_cancha`, `fecha`, `bloque_inicio`, `bloque_fin`, `estado`) VALUES
-(1, '2021-06-26', '10:00:00', '11:00:00', 1),
-(2, '2021-06-26', '10:00:00', '11:00:00', 1),
-(1, '2021-06-26', '11:00:00', '12:00:00', 0),
-(2, '2021-06-26', '11:00:00', '12:00:00', 1),
-(1, '2021-06-26', '12:00:00', '13:00:00', 1),
-(2, '2021-06-26', '12:00:00', '13:00:00', 1),
-(1, '2021-06-26', '13:00:00', '14:00:00', 0),
-(2, '2021-06-26', '13:00:00', '14:00:00', 1),
-(1, '2021-06-26', '14:00:00', '15:00:00', 1),
-(2, '2021-06-26', '14:00:00', '15:00:00', 1),
-(1, '2021-06-26', '15:00:00', '16:00:00', 1),
-(2, '2021-06-26', '15:00:00', '16:00:00', 1),
-(1, '2021-06-26', '16:00:00', '17:00:00', 1),
-(2, '2021-06-26', '16:00:00', '17:00:00', 1),
-(1, '2021-06-26', '17:00:00', '18:00:00', 1),
-(2, '2021-06-26', '17:00:00', '18:00:00', 1),
-(1, '2021-06-26', '18:00:00', '19:00:00', 1),
-(2, '2021-06-26', '18:00:00', '19:00:00', 1);
+INSERT INTO `horario_disponible` (`id_bloque`, `id_cancha`, `fecha`, `bloque_inicio`, `bloque_fin`, `estado`) VALUES
+(1, 1, '2021-06-26', '10:00:00', '11:00:00', 1),
+(2, 2, '2021-07-12', '10:00:00', '11:00:00', 1),
+(3, 1, '2021-06-26', '11:00:00', '12:00:00', 1),
+(4, 2, '2021-06-26', '11:00:00', '12:00:00', 1),
+(5, 1, '2021-06-26', '12:00:00', '13:00:00', 1),
+(6, 2, '2021-06-26', '12:00:00', '13:00:00', 1),
+(7, 1, '2021-06-26', '13:00:00', '14:00:00', 0),
+(8, 2, '2021-06-26', '13:00:00', '14:00:00', 1),
+(9, 1, '2021-06-26', '14:00:00', '15:00:00', 1),
+(10, 2, '2021-06-26', '14:00:00', '15:00:00', 1),
+(11, 1, '2021-06-26', '15:00:00', '16:00:00', 1),
+(12, 2, '2021-06-26', '15:00:00', '16:00:00', 1),
+(13, 1, '2021-06-26', '16:00:00', '17:00:00', 1),
+(14, 2, '2021-06-26', '16:00:00', '17:00:00', 1),
+(15, 1, '2021-06-26', '17:00:00', '18:00:00', 1),
+(16, 2, '2021-06-26', '17:00:00', '18:00:00', 1),
+(17, 1, '2021-06-26', '18:00:00', '19:00:00', 1),
+(18, 2, '2021-06-26', '18:00:00', '19:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -143,7 +143,7 @@ CREATE TABLE `pago` (
 --
 
 INSERT INTO `pago` (`id_pago`, `metodo`, `monto`) VALUES
-(1, 'debito', 4500);
+(1, 'débito', 4500);
 
 -- --------------------------------------------------------
 
@@ -152,6 +152,7 @@ INSERT INTO `pago` (`id_pago`, `metodo`, `monto`) VALUES
 --
 
 CREATE TABLE `reserva` (
+  `id_reserva` int(11) NOT NULL,
   `id_cancha` int(11) NOT NULL,
   `fecha_reserva` date NOT NULL,
   `id_bloque` int(11) NOT NULL,
@@ -164,9 +165,10 @@ CREATE TABLE `reserva` (
 -- Volcado de datos para la tabla `reserva`
 --
 
-INSERT INTO `reserva` (`id_cancha`, `fecha_reserva`, `id_bloque`, `id_usuario`, `id_pago`, `id_estado_reserva`) VALUES
-(1, '2021-06-28', 1, 1, NULL, 1),
-(1, '2021-06-29', 1, 1, NULL, 1);
+INSERT INTO `reserva` (`id_reserva`, `id_cancha`, `fecha_reserva`, `id_bloque`, `id_usuario`, `id_pago`, `id_estado_reserva`) VALUES
+(1, 1, '2021-06-28', 1, 1, NULL, 2),
+(2, 1, '2021-06-29', 6, 1, NULL, 1),
+(3, 2, '2021-07-14', 2, 1, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -264,7 +266,7 @@ ALTER TABLE `estado_reserva`
 -- Indices de la tabla `horario_disponible`
 --
 ALTER TABLE `horario_disponible`
-  ADD PRIMARY KEY (`id_bloque`,`id_cancha`,`fecha`) USING BTREE,
+  ADD PRIMARY KEY (`id_bloque`) USING BTREE,
   ADD KEY `fk_horario` (`id_cancha`);
 
 --
@@ -277,11 +279,12 @@ ALTER TABLE `pago`
 -- Indices de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  ADD PRIMARY KEY (`id_cancha`,`fecha_reserva`,`id_bloque`,`id_usuario`) USING BTREE,
+  ADD PRIMARY KEY (`id_reserva`) USING BTREE,
   ADD KEY `fk_estado_reserva` (`id_estado_reserva`),
   ADD KEY `fk_pago` (`id_pago`),
   ADD KEY `fk_usuario` (`id_usuario`),
-  ADD KEY `fl_bloque` (`id_bloque`) USING BTREE;
+  ADD KEY `fl_bloque` (`id_bloque`),
+  ADD KEY `fk_cancha` (`id_cancha`);
 
 --
 -- Indices de la tabla `tipo_cancha`
@@ -325,10 +328,22 @@ ALTER TABLE `estado_reserva`
   MODIFY `id_estado_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `horario_disponible`
+--
+ALTER TABLE `horario_disponible`
+  MODIFY `id_bloque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
   MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `reserva`
+--
+ALTER TABLE `reserva`
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_cancha`
@@ -371,9 +386,9 @@ ALTER TABLE `horario_disponible`
 ALTER TABLE `reserva`
   ADD CONSTRAINT `fk_cancha` FOREIGN KEY (`id_cancha`) REFERENCES `cancha` (`id_cancha`),
   ADD CONSTRAINT `fk_estado_reserva` FOREIGN KEY (`id_estado_reserva`) REFERENCES `estado_reserva` (`id_estado_reserva`),
+  ADD CONSTRAINT `fk_horario_reserva` FOREIGN KEY (`id_bloque`) REFERENCES `horario_disponible` (`id_bloque`),
   ADD CONSTRAINT `fk_pago` FOREIGN KEY (`id_pago`) REFERENCES `pago` (`id_pago`),
-  ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  ADD CONSTRAINT `reserva_ibfk_1` FOREIGN KEY (`id_bloque`) REFERENCES `horario_disponible` (`id_bloque`);
+  ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 
 --
 -- Filtros para la tabla `usuario`

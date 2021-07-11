@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ums.donoscarito.controllers.ReservationController;
 import com.usm.donoscarito.entities.Reservation;
-import com.usm.donoscarito.entities.ReservationUpdate;
 import com.usm.donoscarito.service.ReservationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -70,7 +69,7 @@ public class ReservationControllerImpl implements ReservationController {
 	@ApiOperation(value = "Modificar una reserva.")
 	@RequestMapping(value = "/update", method = RequestMethod.PATCH, produces={"application/json"})	
 	@Override
-	public ResponseEntity<String> updateReservation(@RequestBody ReservationUpdate reservationUpdate) {
+	public ResponseEntity<String> updateReservation(@RequestBody Reservation reservationUpdate) {
 		try {
 			reservationService.update(reservationUpdate);
 			return new ResponseEntity<String>("",HttpStatus.OK);
@@ -85,7 +84,7 @@ public class ReservationControllerImpl implements ReservationController {
 		}
 	}
 
-	@ApiOperation(value = "Modificar una reserva.")
+	@ApiOperation(value = "Lista las reservas para un usuario.")
 	@RequestMapping(value = "/list/{idUser}", method = RequestMethod.GET, produces={"application/json"})	
 	@Override
 	public List<Reservation> getReservationsByUser(@RequestParam Integer idUser) {

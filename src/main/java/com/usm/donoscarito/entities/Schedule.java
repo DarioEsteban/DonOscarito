@@ -4,27 +4,22 @@ import java.sql.Date;
 import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Table;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.usm.donoscarito.entities.compositeId.ScheduleId;
 
 @Entity
-@IdClass(ScheduleId.class)
 @Table(name = "horario_disponible")
 public class Schedule {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_bloque")
 	private Integer idSchedule;
 
-	@Id
 	@Column(name="id_cancha")
 	private Integer idField;
 
