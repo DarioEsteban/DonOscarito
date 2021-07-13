@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 10-07-2021 a las 17:11:22
--- Versión del servidor: 5.7.33
--- Versión de PHP: 7.4.19
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 13-07-2021 a las 07:09:08
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -211,8 +211,9 @@ CREATE TABLE `tipo_usuario` (
 
 INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `descripcion`) VALUES
 (1, 'Administrador'),
+(3, 'Cliente'),
 (2, 'Recepcionista'),
-(3, 'Cliente');
+(4, 'test');
 
 -- --------------------------------------------------------
 
@@ -236,7 +237,8 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id_usuario`, `id_tipo_usuario`, `nombre`, `apellido`, `email`, `telefono`, `contrasena`) VALUES
 (1, 1, 'Matias', 'Gaete', 'matias', '123212', 'matias123'),
-(2, 1, 'Dario', 'Verdugo', 'dario123', 'asddasasd', 'datio123');
+(2, 1, 'Dario', 'Verdugo', 'dario123', 'asddasasd', 'datio123'),
+(4, 2, 'string', 'string', 'string', 'string', 'string');
 
 --
 -- Índices para tablas volcadas
@@ -296,7 +298,8 @@ ALTER TABLE `tipo_cancha`
 -- Indices de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
-  ADD PRIMARY KEY (`id_tipo_usuario`);
+  ADD PRIMARY KEY (`id_tipo_usuario`),
+  ADD UNIQUE KEY `descripcion` (`descripcion`);
 
 --
 -- Indices de la tabla `usuario`
@@ -355,13 +358,13 @@ ALTER TABLE `tipo_cancha`
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
-  MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
