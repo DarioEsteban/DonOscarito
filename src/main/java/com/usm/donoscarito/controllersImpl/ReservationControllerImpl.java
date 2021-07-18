@@ -1,7 +1,9 @@
 package com.usm.donoscarito.controllersImpl;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -89,6 +91,14 @@ public class ReservationControllerImpl implements ReservationController {
 	@Override
 	public List<Reservation> getReservationsByUser(@RequestParam Integer idUser) {
 		return reservationService.findByidUser(idUser);
+	}
+
+	@ApiOperation(value = "Lista las reservas según fecha.")
+	@RequestMapping(value = "/list/date/{fecha}", method = RequestMethod.GET, produces={"application/json"})
+	@Override
+	public List<Reservation> getReservationsByDate(@RequestParam("fecha") @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
+		// TODO Auto-generated method stub
+		return reservationService.findByDate(date);
 	}
 
 }

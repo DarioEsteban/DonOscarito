@@ -1,5 +1,6 @@
 package com.usm.donoscarito.serviceImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	ScheduleRepository scheduleRepository;
 	
+	//Permite registrar una reserva
 	@Override
 	public void save(Reservation reservation) {
 		if(!reservationRepository.existsById(reservation.getIdReservation()))
@@ -31,6 +33,7 @@ public class ReservationServiceImpl implements ReservationService {
 		}
 	}
 
+	//Permite anular una reserva
 	@Override
 	public void cancel(Reservation reservation) {
 		//Validar existencia de elemento
@@ -70,6 +73,7 @@ public class ReservationServiceImpl implements ReservationService {
 		}
 	}
 
+	//Permite modificar una reserva
 	@Override
 	public void update(Reservation reservationUpdate) {
 
@@ -117,9 +121,17 @@ public class ReservationServiceImpl implements ReservationService {
 		
 	}
 
+	//Permite listar las reservas por usuario
 	@Override
 	public List<Reservation> findByidUser(Integer idUser) {
 		return reservationRepository.findByIdUser(idUser);
+	}
+
+	//Permite listar las reservas por fecha
+	@Override
+	public List<Reservation> findByDate(Date date) {
+		// TODO Auto-generated method stub
+		return reservationRepository.findAllByDate(date);
 	}
 
 }
