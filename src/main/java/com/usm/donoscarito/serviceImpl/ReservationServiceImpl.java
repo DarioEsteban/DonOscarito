@@ -22,10 +22,14 @@ public class ReservationServiceImpl implements ReservationService {
 	ScheduleRepository scheduleRepository;
 	
 	//Permite registrar una reserva
+	@SuppressWarnings("deprecation")
 	@Override
 	public void save(Reservation reservation) {
 		if(!reservationRepository.existsById(reservation.getIdReservation()))
 		{
+			reservation.getDate().setHours(0);
+			reservation.getDate().setMinutes(0);
+			reservation.getDate().setSeconds(0);
 			reservationRepository.save(reservation);
 		}
 		else {
@@ -124,7 +128,7 @@ public class ReservationServiceImpl implements ReservationService {
 	//Permite listar las reservas por usuario
 	@Override
 	public List<Reservation> findByidUser(Integer idUser) {
-		return reservationRepository.findByIdUser(idUser);
+		return reservationRepository.findByUserIdUser(idUser);
 	}
 
 	//Permite listar las reservas por fecha

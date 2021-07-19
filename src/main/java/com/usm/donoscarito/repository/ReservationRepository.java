@@ -11,10 +11,10 @@ import com.usm.donoscarito.entities.Reservation;
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
 	//Buscar reserva por ID de usuario
-	public List<Reservation> findByIdUser(Integer idUser);
+	public List<Reservation> findByUserIdUser(Integer idUser);
 	
 	//Buscar reservas por fecha 
-	@Query(value = "SELECT r FROM Reservation r WHERE r.date <= :creationDate ORDER BY r.state.description DESC")
+	@Query(value = "SELECT r FROM Reservation r WHERE r.date = CAST(:creationDate as date) ORDER BY r.state.description DESC")
 	public List<Reservation> findAllByDate(@Param("creationDate") Date date);
 	
 }
