@@ -26,8 +26,9 @@ public class Reservation {
     @JoinColumn(name = "id_cancha")
 	private Field field;
 	
-	@Column(name="id_usuario")
-	private Integer idUser;
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario")
+	private User user;
 	
 	@Column(name="id_bloque")
 	private Integer idBlock;
@@ -66,12 +67,12 @@ public class Reservation {
 		this.field = field;
 	}
 
-	public Integer getIdUser() {
-		return idUser;
+	public User getUser() {
+		return user;
 	}
 
-	public void setIdUser(Integer idUser) {
-		this.idUser = idUser;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Integer getIdBlock() {
