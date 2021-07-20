@@ -13,6 +13,8 @@ public interface ReservationController {
 	
 	public ResponseEntity<String> updateReservation(Reservation reservationUpdate);
 	
+	public ResponseEntity<String> payReservation(Reservation reservationPay);
+	
 	public List<Reservation> getReservationsByUser(Integer idUser);
 	
 	public List<Reservation> getReservationsByDate(Date date);

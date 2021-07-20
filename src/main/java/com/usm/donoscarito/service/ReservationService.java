@@ -12,6 +12,8 @@ public interface ReservationService {
 	
 	public void update(Reservation reservationUpdate);
 	
+	public void pay(Reservation reservationToPay);
+	
 	public List<Reservation> findByidUser(Integer idUser);
 	
 	public List<Reservation> findByDate(Date date);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.usm.donoscarito.entities.Reservation;
 import com.usm.donoscarito.entities.Schedule;
 import com.usm.donoscarito.entities.StateReservation;
+import com.usm.donoscarito.repository.PaymentRepository;
 import com.usm.donoscarito.repository.ReservationRepository;
 import com.usm.donoscarito.repository.ScheduleRepository;
 import com.usm.donoscarito.service.ReservationService;
@@ -20,6 +21,8 @@ public class ReservationServiceImpl implements ReservationService {
 	ReservationRepository reservationRepository;
 	@Autowired
 	ScheduleRepository scheduleRepository;
+	@Autowired
+	PaymentRepository paymentRepository;
 	
 	//Permite registrar una reserva
 	@SuppressWarnings("deprecation")
@@ -136,6 +139,53 @@ public class ReservationServiceImpl implements ReservationService {
 	public List<Reservation> findByDate(Date date) {
 		// TODO Auto-generated method stub
 		return reservationRepository.findAllByDate(date);
+	}
+
+	@Override
+	public void pay(Reservation reservationToPay) {
+		// Verificar que elemento exista en la base de datos
+		if(reservationRepository.existsById(reservationToPay.getIdReservation()))
+		{
+			//Crear nuevo objeto de reserva que será enviado a la base de datos
+			Reservation reservaToUpdate = new Reservation();
+			//Buscar objeto en base de datos según ID
+			Optional<Reservation> reservationFind = reservationRepository.findById(reservationToPay.getIdReservation());
+			
+			if(reservationFind.isPresent()) {
+				//Validar que no contenga pago registrado
+				if(reservationFind.get().getPayment() == null)
+				{
+					reservaToUpdate = reservationFind.get();
+					
+					try {
+						//Guardar reserva
+						paymentRepository.save(reservationToPay.getPayment());
+					}
+					catch(IllegalArgumentException iex){
+						throw new IllegalArgumentException("Error al guardar pago.");
+					}
+					
+					try {
+						//Enlazar pago con reserva
+						reservaToUpdate.setPayment(reservationToPay.getPayment());
+						//Actualizar estado de reserva
+						reservaToUpdate.setState(reservationToPay.getState());
+						//Guardar reserva
+						reservationRepository.save(reservaToUpdate);
+					}
+					catch(IllegalArgumentException iex){
+						throw new IllegalArgumentException("Error al guardar reserva.");
+					}
+				}
+				else {
+					throw new IllegalArgumentException("La reserva se encuentra pagada, no se puede generar un nuevo cobro.");
+				}
+			}
+					
+		}
+		else {
+			throw new IllegalArgumentException("No existe una reserva con las características seleccionadas.");
+		}
 	}
 
 }

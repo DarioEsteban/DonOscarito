@@ -101,4 +101,22 @@ public class ReservationControllerImpl implements ReservationController {
 		return reservationService.findByDate(date);
 	}
 
+	@ApiOperation(value = "Pagar una reserva.")
+	@RequestMapping(value = "/pay", method = RequestMethod.PATCH, produces={"application/json"})	
+	@Override
+	public ResponseEntity<String> payReservation(@RequestBody Reservation reservationPay) {
+		try {
+			reservationService.pay(reservationPay);
+			return new ResponseEntity<String>("",HttpStatus.OK);
+		}
+		catch(IllegalArgumentException iex)
+		{
+			return new ResponseEntity<String>("{\"message\":\""+iex.getMessage()+"\"}",HttpStatus.CONFLICT);
+		}
+		catch(Exception ex)
+		{
+			return new ResponseEntity<String>("{\"message\":\""+ex.getMessage()+"\"}",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }
