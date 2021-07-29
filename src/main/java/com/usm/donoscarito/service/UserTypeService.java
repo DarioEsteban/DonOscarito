@@ -8,4 +8,8 @@ public interface UserTypeService {
 	
 	public List<UserType> findAllUsersTypes();
 
+	public void save(UserType userType);
+
+	public void update(UserType userType);
+
 }
